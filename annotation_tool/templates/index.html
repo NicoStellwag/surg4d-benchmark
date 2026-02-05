@@ -106,6 +106,9 @@
                                 <span class="status-count" id="rangeSelectionCount"></span>
                             </div>
                             <div class="timeline-wrapper">
+                                <div class="timeline-labels-column">
+                                    <div class="timeline-label-header">Query</div>
+                                </div>
                                 <div class="timeline-content">
                                     <div class="timeline-scale" id="timelineScale"></div>
                                     <div class="timeline-annotations" id="timelineAnnotations">
@@ -130,21 +133,61 @@
 
                 <!-- Directional Tab -->
                 <div class="tab-content" id="directional-tab">
-                    <div class="media-container">
-                        <div class="video-section">
-                            <h3>Video</h3>
-                            <video id="directionalVideo" controls>
-                                <source src="" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="frame-section">
-                            <h3>Frame</h3>
-                            <div class="frame-display">
-                                <img id="directionalFrame" src="" alt="Frame">
+                    <div class="directional-content">
+                        <div class="media-container">
+                            <div class="video-section">
+                                <h3>Video</h3>
+                                <video id="directionalVideo" controls>
+                                    <source src="" type="video/mp4">
+                                </video>
                             </div>
-                            <div class="frame-controls">
-                                <input type="range" id="directionalFrameSlider" min="0" max="0" value="0">
-                                <span id="directionalFrameLabel">Frame 00</span>
+                            <div class="frame-section">
+                                <h3>Frame <span id="directionalActiveQueries" class="frame-hint"></span></h3>
+                                <div class="frame-display" id="directionalFrameContainer">
+                                    <img id="directionalFrame" src="" alt="Frame">
+                                    <div id="directionalArrowOverlay" class="directional-arrow-overlay"></div>
+                                </div>
+                                <div class="frame-controls">
+                                    <input type="range" id="directionalFrameSlider" min="0" max="0" value="0">
+                                    <span id="directionalFrameLabel">Frame 00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Directional Timeline -->
+                        <div class="directional-timeline-container">
+                            <div class="timeline-header">
+                                <h3>Directional Annotations</h3>
+                                <div class="timeline-actions">
+                                    <button class="btn-small" id="addDirectionalBtn">Add Direction</button>
+                                </div>
+                            </div>
+                            <div class="directional-range-status" id="directionalRangeStatus" style="display:none;">
+                                <span class="status-icon">+</span>
+                                <span class="status-text">Range selection mode: Hold Shift and drag on the slider to select a range</span>
+                                <span class="status-range" id="directionalRangeDisplay"></span>
+                            </div>
+                            <div class="timeline-wrapper">
+                                <div class="timeline-labels-column">
+                                    <div class="timeline-label-header">Query</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-scale" id="directionalTimelineScale"></div>
+                                    <div class="timeline-annotations" id="directionalTimelineAnnotations">
+                                        <!-- Timeline annotations will be rendered here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Directional Annotations Explorer -->
+                        <div class="annotations-explorer" id="directionalAnnotationsExplorer">
+                            <div class="explorer-header">
+                                <h3>Directional Annotations List</h3>
+                                <span id="directionalAnnotationCount">0 annotations</span>
+                            </div>
+                            <div class="annotations-list" id="directionalAnnotationsList">
+                                <!-- Directional annotations will be listed here -->
                             </div>
                         </div>
                     </div>
@@ -239,6 +282,71 @@
             <div class="modal-footer">
                 <button class="btn-secondary" id="temporalEditModalCancel">Cancel</button>
                 <button class="btn-primary" id="temporalEditModalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Directional Annotation Modal -->
+    <div id="directionalModal" class="modal">
+        <div class="modal-content modal-content-wide">
+            <div class="modal-header">
+                <h3 id="directionalModalTitle">Add Directional Annotation</h3>
+                <span class="modal-close" id="directionalModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="annotation-info">
+                    <div class="info-row">
+                        <label>Annotation ID:</label>
+                        <span id="directionalId" class="value monospace"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Frame Range:</label>
+                        <span id="directionalRange" class="value monospace"></span>
+                    </div>
+                </div>
+                
+                <div class="query-input">
+                    <label for="directionalQueryText">Query Text:</label>
+                    <textarea id="directionalQueryText" placeholder="Enter what object's direction you are annotating (e.g., 'grasper tip')..."></textarea>
+                </div>
+                
+                <div class="direction-selector">
+                    <h4>Direction</h4>
+                    <div class="direction-axes">
+                        <div class="direction-axis">
+                            <label>X (Horizontal):</label>
+                            <div class="direction-buttons" id="directionX">
+                                <button type="button" class="dir-btn" data-value="-1">Left</button>
+                                <button type="button" class="dir-btn selected" data-value="0">Neutral</button>
+                                <button type="button" class="dir-btn" data-value="1">Right</button>
+                            </div>
+                        </div>
+                        <div class="direction-axis">
+                            <label>Y (Vertical):</label>
+                            <div class="direction-buttons" id="directionY">
+                                <button type="button" class="dir-btn" data-value="-1">Up</button>
+                                <button type="button" class="dir-btn selected" data-value="0">Neutral</button>
+                                <button type="button" class="dir-btn" data-value="1">Down</button>
+                            </div>
+                        </div>
+                        <div class="direction-axis">
+                            <label>Z (Depth):</label>
+                            <div class="direction-buttons" id="directionZ">
+                                <button type="button" class="dir-btn" data-value="-1">To Camera</button>
+                                <button type="button" class="dir-btn selected" data-value="0">Neutral</button>
+                                <button type="button" class="dir-btn" data-value="1">From Camera</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="direction-preview">
+                        <span>Selected: </span>
+                        <span id="directionPreviewText" class="direction-preview-value">Neutral (0, 0, 0)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="directionalModalCancel">Cancel</button>
+                <button class="btn-primary" id="directionalModalSave">Save Annotation</button>
             </div>
         </div>
     </div>

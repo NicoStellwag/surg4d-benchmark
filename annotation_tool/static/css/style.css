@@ -70,7 +70,6 @@ body {
 }
 
 .annotation-badge {
-    background-color: #1976d2;
     color: white;
     font-size: 11px;
     font-weight: 600;
@@ -80,9 +79,31 @@ body {
     text-align: center;
 }
 
-.clip-item.active .annotation-badge {
-    background-color: #fff;
+.annotation-badge.badge-spatial {
+    background-color: #1976d2;
+}
+
+.annotation-badge.badge-temporal {
+    background-color: #ff9800;
+}
+
+.annotation-badge.badge-directional {
+    background-color: #9c27b0;
+}
+
+.clip-item.active .annotation-badge.badge-spatial {
+    background-color: #bbdefb;
     color: #1976d2;
+}
+
+.clip-item.active .annotation-badge.badge-temporal {
+    background-color: #ffe0b2;
+    color: #e65100;
+}
+
+.clip-item.active .annotation-badge.badge-directional {
+    background-color: #e1bee7;
+    color: #7b1fa2;
 }
 
 /* Main Content */
@@ -760,13 +781,31 @@ body {
 }
 
 .timeline-wrapper {
+    display: flex;
     position: relative;
-    padding-top: 20px;
+}
+
+.timeline-labels-column {
+    width: 120px;
+    flex-shrink: 0;
+    padding-right: 10px;
+}
+
+.timeline-label-header {
+    height: 28px;
+    line-height: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #666;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
 }
 
 .timeline-content {
+    flex: 1;
     position: relative;
-    margin-left: 120px; /* Space for labels */
     min-height: 50px;
 }
 
@@ -802,16 +841,33 @@ body {
     height: 28px;
 }
 
+.timeline-annotation-row.pending .timeline-annotation-bar-container {
+    opacity: 0.7;
+}
+
+.timeline-annotation-row:not(.pending):hover .timeline-annotation-bar-container {
+    background-color: #e3f2fd;
+}
+
 .timeline-annotation-label {
-    position: absolute;
-    left: 0;
-    width: 120px;
+    height: 28px;
+    line-height: 28px;
     font-size: 11px;
     color: #333;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 10px;
+    text-align: right;
+    margin-bottom: 8px;
+}
+
+.timeline-annotation-label:hover {
+    color: #1976d2;
+}
+
+.timeline-annotation-label.pending {
+    color: #ff9800;
+    font-style: italic;
 }
 
 .timeline-annotation-bar-container {
@@ -1010,6 +1066,173 @@ body {
     pointer-events: none;
     z-index: 5;
     border-radius: 4px;
+}
+
+/* Directional Content */
+.directional-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.directional-timeline-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.directional-range-status {
+    background-color: #f3e5f5;
+    border: 1px solid #9c27b0;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #7b1fa2;
+}
+
+.directional-range-status .status-icon {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.directional-range-status .status-text {
+    flex: 1;
+}
+
+.directional-range-status .status-range {
+    font-weight: 600;
+    background: #9c27b0;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+/* Directional timeline bar */
+.timeline-annotation-bar.type-directional {
+    background-color: #9c27b0;
+}
+
+/* Directional Arrow Overlay */
+.directional-arrow-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.directional-arrow-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.arrow-visual {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-label {
+    color: white;
+    font-size: 13px;
+    max-width: 200px;
+}
+
+/* Direction Selector in Modal */
+.direction-selector {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.direction-selector h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.direction-axes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.direction-axis {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.direction-axis label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    min-width: 100px;
+}
+
+.direction-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.dir-btn {
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 90px;
+}
+
+.dir-btn:hover {
+    border-color: #9c27b0;
+    background-color: #fce4ec;
+}
+
+.dir-btn.selected {
+    border-color: #9c27b0;
+    background-color: #9c27b0;
+    color: white;
+}
+
+.direction-preview {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    font-size: 13px;
+}
+
+.direction-preview-value {
+    font-weight: 600;
+    color: #9c27b0;
+    font-family: monospace;
+}
+
+/* Wide modal for directional */
+.modal-content-wide {
+    max-width: 600px;
 }
 
 /* Responsive */

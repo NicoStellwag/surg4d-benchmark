@@ -23,6 +23,15 @@ class AnnotationTool {
             dragStart: null  // frame index where shift+drag started
         };
 
+        // Directional annotation state
+        this.directionalAnnotations = [];
+        this.directionalRangeMode = {
+            active: false,
+            range: null,
+            dragStart: null
+        };
+        this.pendingDirectional = null;
+
         this.init();
     }
 
@@ -33,6 +42,7 @@ class AnnotationTool {
         this.setupEventListeners();
         this.setupSpatialAnnotations();
         this.setupTemporalAnnotations();
+        this.setupDirectionalAnnotations();
     }
 
     async loadClips() {
@@ -71,13 +81,29 @@ class AnnotationTool {
             const badgesContainer = document.createElement('div');
             badgesContainer.className = 'annotation-badges';
 
-            const counts = this.annotationCounts?.[clip.name] || { spatial: 0, temporal: 0 };
-            const totalCount = (counts.spatial || 0) + (counts.temporal || 0);
+            const counts = this.annotationCounts?.[clip.name] || { spatial: 0, temporal: 0, directional: 0 };
 
-            if (totalCount > 0) {
+            if (counts.spatial > 0) {
                 const badge = document.createElement('span');
-                badge.className = 'annotation-badge';
-                badge.textContent = totalCount;
+                badge.className = 'annotation-badge badge-spatial';
+                badge.textContent = counts.spatial;
+                badge.title = 'Spatial annotations';
+                badgesContainer.appendChild(badge);
+            }
+
+            if (counts.temporal > 0) {
+                const badge = document.createElement('span');
+                badge.className = 'annotation-badge badge-temporal';
+                badge.textContent = counts.temporal;
+                badge.title = 'Temporal annotations';
+                badgesContainer.appendChild(badge);
+            }
+
+            if (counts.directional > 0) {
+                const badge = document.createElement('span');
+                badge.className = 'annotation-badge badge-directional';
+                badge.textContent = counts.directional;
+                badge.title = 'Directional annotations';
                 badgesContainer.appendChild(badge);
             }
 
@@ -103,6 +129,7 @@ class AnnotationTool {
         await this.loadClipFrames(clip.name);
         await this.loadSpatialAnnotations(clip.name);
         await this.loadTemporalAnnotations(clip.name);
+        await this.loadDirectionalAnnotations(clip.name);
         this.updateMediaSources(clip.name);
     }
 
@@ -409,10 +436,16 @@ class AnnotationTool {
     renderTimeline() {
         const container = document.getElementById('timelineAnnotations');
         const scale = document.getElementById('timelineScale');
-        if (!container || !scale) return;
+        const labelsColumn = document.querySelector('.timeline-labels-column');
+        if (!container || !scale || !labelsColumn) return;
 
         container.innerHTML = '';
         scale.innerHTML = '';
+        
+        // Clear labels except header
+        const header = labelsColumn.querySelector('.timeline-label-header');
+        labelsColumn.innerHTML = '';
+        if (header) labelsColumn.appendChild(header);
 
         if (this.frameData.length === 0) return;
 
@@ -434,7 +467,7 @@ class AnnotationTool {
 
         // Render saved annotations
         this.temporalAnnotations.forEach(annotation => {
-            this.renderAnnotationRow(container, annotation, false);
+            this.renderAnnotationRow(container, labelsColumn, annotation, false);
         });
 
         // Render pending ranges if in range mode
@@ -445,18 +478,21 @@ class AnnotationTool {
                 query: this.rangeMode.query + ' (pending)',
                 ranges: this.rangeMode.ranges
             };
-            this.renderAnnotationRow(container, pendingAnnotation, true);
+            this.renderAnnotationRow(container, labelsColumn, pendingAnnotation, true);
         }
     }
 
-    renderAnnotationRow(container, annotation, isPending) {
-        const row = document.createElement('div');
-        row.className = 'timeline-annotation-row' + (isPending ? ' pending' : '');
-
+    renderAnnotationRow(container, labelsColumn, annotation, isPending) {
+        // Create label in labels column
         const label = document.createElement('div');
-        label.className = 'timeline-annotation-label';
+        label.className = 'timeline-annotation-label' + (isPending ? ' pending' : '');
         label.textContent = annotation.query;
         label.title = annotation.query;
+        labelsColumn.appendChild(label);
+
+        // Create bar row in main container
+        const row = document.createElement('div');
+        row.className = 'timeline-annotation-row' + (isPending ? ' pending' : '');
 
         const barContainer = document.createElement('div');
         barContainer.className = 'timeline-annotation-bar-container';
@@ -480,13 +516,16 @@ class AnnotationTool {
             });
         }
 
-        row.appendChild(label);
         row.appendChild(barContainer);
 
         if (!isPending) {
             row.addEventListener('click', () => {
                 this.editTemporalAnnotation(annotation);
             });
+            label.addEventListener('click', () => {
+                this.editTemporalAnnotation(annotation);
+            });
+            label.style.cursor = 'pointer';
         }
 
         container.appendChild(row);
@@ -716,6 +755,586 @@ class AnnotationTool {
         }
     }
 
+    // ==================== DIRECTIONAL ANNOTATIONS ====================
+
+    async loadDirectionalAnnotations(clipName) {
+        try {
+            const response = await fetch(`/api/clips/${clipName}/directional-annotations`);
+            const data = await response.json();
+            this.directionalAnnotations = data.annotations || [];
+        } catch (error) {
+            console.error('Failed to load directional annotations:', error);
+            this.directionalAnnotations = [];
+        }
+        this.renderDirectionalTimeline();
+        this.renderDirectionalAnnotationsList();
+        this.updateDirectionalArrowOverlay();
+    }
+
+    setupDirectionalAnnotations() {
+        // Add Direction button
+        document.getElementById('addDirectionalBtn')?.addEventListener('click', () => {
+            if (!this.currentClip) {
+                alert('Please select a clip first');
+                return;
+            }
+
+            if (this.directionalRangeMode.active) {
+                this.finishDirectionalRangeSelection();
+            } else {
+                this.startDirectionalRangeSelection();
+            }
+        });
+
+        this.setupDirectionalSlider();
+        this.setupDirectionalModal();
+    }
+
+    setupDirectionalSlider() {
+        const slider = document.getElementById('directionalFrameSlider');
+        if (!slider) return;
+
+        let shiftWasHeldOnMouseDown = false;
+
+        slider.addEventListener('mousedown', (e) => {
+            if (e.shiftKey && this.directionalRangeMode.active) {
+                shiftWasHeldOnMouseDown = true;
+                this.directionalRangeMode.dragStart = parseInt(slider.value);
+            } else {
+                shiftWasHeldOnMouseDown = false;
+                this.directionalRangeMode.dragStart = null;
+            }
+        });
+
+        slider.addEventListener('input', (e) => {
+            const newValue = parseInt(e.target.value);
+            this.currentFrameIndex = newValue;
+
+            ['spatialFrameSlider', 'temporalFrameSlider', 'directionalFrameSlider'].forEach(id => {
+                document.getElementById(id).value = newValue;
+            });
+
+            this.updateFrameDisplay('spatial');
+            this.updateFrameDisplay('temporal');
+            this.updateFrameDisplay('directional');
+            this.updateFrameLabels();
+            this.renderTimeline();
+            this.renderDirectionalTimeline();
+            this.updateTemporalFrameOverlay();
+            this.updateDirectionalArrowOverlay();
+
+            if (shiftWasHeldOnMouseDown && this.directionalRangeMode.active && this.directionalRangeMode.dragStart !== null) {
+                this.showDirectionalRangePreview(this.directionalRangeMode.dragStart, newValue);
+            }
+        });
+
+        slider.addEventListener('mouseup', (e) => {
+            if (shiftWasHeldOnMouseDown && this.directionalRangeMode.active && this.directionalRangeMode.dragStart !== null) {
+                const endFrame = parseInt(slider.value);
+                const startFrame = this.directionalRangeMode.dragStart;
+
+                if (startFrame !== endFrame) {
+                    const range = [Math.min(startFrame, endFrame), Math.max(startFrame, endFrame)];
+                    this.directionalRangeMode.range = range;
+                    this.updateDirectionalRangeStatus();
+                }
+            }
+
+            shiftWasHeldOnMouseDown = false;
+            this.directionalRangeMode.dragStart = null;
+            this.hideDirectionalRangePreview();
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            shiftWasHeldOnMouseDown = false;
+            this.directionalRangeMode.dragStart = null;
+            this.hideDirectionalRangePreview();
+        });
+    }
+
+    startDirectionalRangeSelection() {
+        this.directionalRangeMode = {
+            active: true,
+            range: null,
+            dragStart: null
+        };
+
+        const btn = document.getElementById('addDirectionalBtn');
+        btn.textContent = 'Done';
+        btn.classList.add('btn-active');
+
+        this.showDirectionalRangeModeStatus();
+    }
+
+    finishDirectionalRangeSelection() {
+        if (!this.directionalRangeMode.range) {
+            if (!confirm('No range selected. Cancel this annotation?')) {
+                return;
+            }
+            this.cancelDirectionalRangeSelection();
+            return;
+        }
+
+        // Open modal to set query and direction
+        this.openDirectionalModal(this.directionalRangeMode.range);
+    }
+
+    cancelDirectionalRangeSelection() {
+        this.directionalRangeMode = {
+            active: false,
+            range: null,
+            dragStart: null
+        };
+
+        const btn = document.getElementById('addDirectionalBtn');
+        btn.textContent = 'Add Direction';
+        btn.classList.remove('btn-active');
+        this.hideDirectionalRangeModeStatus();
+        this.renderDirectionalTimeline();
+    }
+
+    showDirectionalRangeModeStatus() {
+        const status = document.getElementById('directionalRangeStatus');
+        if (status) {
+            status.style.display = 'flex';
+            this.updateDirectionalRangeStatus();
+        }
+    }
+
+    hideDirectionalRangeModeStatus() {
+        const status = document.getElementById('directionalRangeStatus');
+        if (status) {
+            status.style.display = 'none';
+        }
+    }
+
+    updateDirectionalRangeStatus() {
+        const display = document.getElementById('directionalRangeDisplay');
+        if (display) {
+            if (this.directionalRangeMode.range) {
+                const r = this.directionalRangeMode.range;
+                display.textContent = `[${r[0]}, ${r[1]}]`;
+            } else {
+                display.textContent = 'No range selected';
+            }
+        }
+    }
+
+    showDirectionalRangePreview(start, end) {
+        const container = document.querySelector('#directional-tab .timeline-content');
+        if (!container || this.frameData.length === 0) return;
+
+        let preview = container.querySelector('.range-preview');
+        if (!preview) {
+            preview = document.createElement('div');
+            preview.className = 'range-preview';
+            container.appendChild(preview);
+        }
+
+        const minFrame = Math.min(start, end);
+        const maxFrame = Math.max(start, end);
+        const left = (minFrame / (this.frameData.length - 1)) * 100;
+        const width = ((maxFrame - minFrame) / (this.frameData.length - 1)) * 100;
+
+        preview.style.left = `${left}%`;
+        preview.style.width = `${width}%`;
+        preview.style.display = 'block';
+    }
+
+    hideDirectionalRangePreview() {
+        const preview = document.querySelector('#directional-tab .range-preview');
+        if (preview) {
+            preview.style.display = 'none';
+        }
+    }
+
+    setupDirectionalModal() {
+        // Close buttons
+        document.getElementById('directionalModalClose')?.addEventListener('click', () => {
+            this.closeDirectionalModal();
+        });
+        document.getElementById('directionalModalCancel')?.addEventListener('click', () => {
+            this.closeDirectionalModal();
+        });
+
+        // Save button
+        document.getElementById('directionalModalSave')?.addEventListener('click', () => {
+            this.saveDirectionalFromModal();
+        });
+
+        // Direction buttons
+        ['directionX', 'directionY', 'directionZ'].forEach(id => {
+            const container = document.getElementById(id);
+            if (container) {
+                container.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('dir-btn')) {
+                        container.querySelectorAll('.dir-btn').forEach(btn => btn.classList.remove('selected'));
+                        e.target.classList.add('selected');
+                        this.updateDirectionPreview();
+                    }
+                });
+            }
+        });
+
+        // Close on backdrop click
+        document.getElementById('directionalModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'directionalModal') {
+                this.closeDirectionalModal();
+            }
+        });
+    }
+
+    getDirectionLabels(x, y, z) {
+        const labels = [];
+        if (x === -1) labels.push('Left');
+        else if (x === 1) labels.push('Right');
+        if (y === -1) labels.push('Up');
+        else if (y === 1) labels.push('Down');
+        if (z === -1) labels.push('To Camera');
+        else if (z === 1) labels.push('From Camera');
+        return labels.length > 0 ? labels.join(', ') : 'Neutral';
+    }
+
+    updateDirectionPreview() {
+        const x = parseInt(document.querySelector('#directionX .dir-btn.selected')?.dataset.value || '0');
+        const y = parseInt(document.querySelector('#directionY .dir-btn.selected')?.dataset.value || '0');
+        const z = parseInt(document.querySelector('#directionZ .dir-btn.selected')?.dataset.value || '0');
+
+        const labels = this.getDirectionLabels(x, y, z);
+        const preview = document.getElementById('directionPreviewText');
+        if (preview) {
+            preview.textContent = `${labels} (${x}, ${y}, ${z})`;
+        }
+    }
+
+    openDirectionalModal(range, existingAnnotation = null) {
+        const modal = document.getElementById('directionalModal');
+        
+        if (existingAnnotation) {
+            this.pendingDirectional = { ...existingAnnotation };
+            document.getElementById('directionalModalTitle').textContent = 'Edit Directional Annotation';
+            document.getElementById('directionalId').textContent = existingAnnotation.id;
+            document.getElementById('directionalRange').textContent = `[${existingAnnotation.range[0]}, ${existingAnnotation.range[1]}]`;
+            document.getElementById('directionalQueryText').value = existingAnnotation.query;
+
+            // Set direction buttons
+            ['X', 'Y', 'Z'].forEach(axis => {
+                const container = document.getElementById(`direction${axis}`);
+                const value = existingAnnotation.direction[axis.toLowerCase()];
+                container.querySelectorAll('.dir-btn').forEach(btn => {
+                    btn.classList.toggle('selected', parseInt(btn.dataset.value) === value);
+                });
+            });
+        } else {
+            const count = this.directionalAnnotations.length;
+            const annotationId = `${this.currentClip.name}_directional_${count}`;
+            
+            this.pendingDirectional = {
+                id: annotationId,
+                range: range,
+                query: '',
+                direction: { x: 0, y: 0, z: 0 }
+            };
+            
+            document.getElementById('directionalModalTitle').textContent = 'Add Directional Annotation';
+            document.getElementById('directionalId').textContent = annotationId;
+            document.getElementById('directionalRange').textContent = `[${range[0]}, ${range[1]}]`;
+            document.getElementById('directionalQueryText').value = '';
+
+            // Reset direction buttons to neutral
+            ['X', 'Y', 'Z'].forEach(axis => {
+                const container = document.getElementById(`direction${axis}`);
+                container.querySelectorAll('.dir-btn').forEach(btn => {
+                    btn.classList.toggle('selected', btn.dataset.value === '0');
+                });
+            });
+        }
+
+        this.updateDirectionPreview();
+        modal.classList.add('active');
+        document.getElementById('directionalQueryText').focus();
+    }
+
+    closeDirectionalModal() {
+        document.getElementById('directionalModal').classList.remove('active');
+        this.pendingDirectional = null;
+        this.cancelDirectionalRangeSelection();
+    }
+
+    saveDirectionalFromModal() {
+        if (!this.pendingDirectional) return;
+
+        const query = document.getElementById('directionalQueryText').value.trim();
+        if (!query) {
+            alert('Please enter a query text');
+            return;
+        }
+
+        const x = parseInt(document.querySelector('#directionX .dir-btn.selected')?.dataset.value || '0');
+        const y = parseInt(document.querySelector('#directionY .dir-btn.selected')?.dataset.value || '0');
+        const z = parseInt(document.querySelector('#directionZ .dir-btn.selected')?.dataset.value || '0');
+
+        const direction = { x, y, z };
+        const directionLabel = this.getDirectionLabels(x, y, z);
+
+        const annotation = {
+            id: this.pendingDirectional.id,
+            range: this.pendingDirectional.range,
+            query: query,
+            direction: direction,
+            direction_label: directionLabel
+        };
+
+        // Check if editing or adding
+        const existingIndex = this.directionalAnnotations.findIndex(a => a.id === annotation.id);
+        if (existingIndex !== -1) {
+            this.directionalAnnotations[existingIndex] = annotation;
+        } else {
+            this.directionalAnnotations.push(annotation);
+        }
+
+        document.getElementById('directionalModal').classList.remove('active');
+        this.pendingDirectional = null;
+        
+        // Reset range mode
+        this.directionalRangeMode = {
+            active: false,
+            range: null,
+            dragStart: null
+        };
+        const btn = document.getElementById('addDirectionalBtn');
+        btn.textContent = 'Add Direction';
+        btn.classList.remove('btn-active');
+        this.hideDirectionalRangeModeStatus();
+
+        this.renderDirectionalTimeline();
+        this.renderDirectionalAnnotationsList();
+        this.updateDirectionalArrowOverlay();
+    }
+
+    renderDirectionalTimeline() {
+        const container = document.getElementById('directionalTimelineAnnotations');
+        const scale = document.getElementById('directionalTimelineScale');
+        const labelsColumn = document.querySelector('#directional-tab .timeline-labels-column');
+        if (!container || !scale || !labelsColumn) return;
+
+        container.innerHTML = '';
+        scale.innerHTML = '';
+
+        const header = labelsColumn.querySelector('.timeline-label-header');
+        labelsColumn.innerHTML = '';
+        if (header) labelsColumn.appendChild(header);
+
+        if (this.frameData.length === 0) return;
+
+        // Scale markers
+        const numFrames = this.frameData.length;
+        for (let i = 0; i < numFrames; i += 5) {
+            const marker = document.createElement('div');
+            marker.className = 'timeline-frame-marker';
+            marker.style.left = `${(i / (numFrames - 1)) * 100}%`;
+            marker.textContent = i;
+            scale.appendChild(marker);
+        }
+
+        // Current frame indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'timeline-current-frame';
+        indicator.style.left = `${(this.currentFrameIndex / (this.frameData.length - 1)) * 100}%`;
+        container.appendChild(indicator);
+
+        // Render saved annotations
+        this.directionalAnnotations.forEach(annotation => {
+            this.renderDirectionalAnnotationRow(container, labelsColumn, annotation, false);
+        });
+
+        // Render pending range if in range mode
+        if (this.directionalRangeMode.active && this.directionalRangeMode.range) {
+            const pendingAnnotation = {
+                id: 'pending',
+                range: this.directionalRangeMode.range,
+                query: '(pending)',
+                direction_label: '?'
+            };
+            this.renderDirectionalAnnotationRow(container, labelsColumn, pendingAnnotation, true);
+        }
+    }
+
+    renderDirectionalAnnotationRow(container, labelsColumn, annotation, isPending) {
+        // Create label
+        const label = document.createElement('div');
+        label.className = 'timeline-annotation-label' + (isPending ? ' pending' : '');
+        label.textContent = annotation.query;
+        label.title = annotation.query;
+        labelsColumn.appendChild(label);
+
+        // Create bar row
+        const row = document.createElement('div');
+        row.className = 'timeline-annotation-row' + (isPending ? ' pending' : '');
+
+        const barContainer = document.createElement('div');
+        barContainer.className = 'timeline-annotation-bar-container';
+
+        const bar = document.createElement('div');
+        bar.className = 'timeline-annotation-bar type-directional';
+        const startPct = (annotation.range[0] / (this.frameData.length - 1)) * 100;
+        const widthPct = ((annotation.range[1] - annotation.range[0]) / (this.frameData.length - 1)) * 100;
+        bar.style.left = `${startPct}%`;
+        bar.style.width = `${Math.max(widthPct, 0.5)}%`;
+        bar.title = `Frames ${annotation.range[0]}-${annotation.range[1]}: ${annotation.direction_label}`;
+        barContainer.appendChild(bar);
+
+        row.appendChild(barContainer);
+
+        if (!isPending) {
+            row.addEventListener('click', () => this.editDirectionalAnnotation(annotation));
+            label.addEventListener('click', () => this.editDirectionalAnnotation(annotation));
+            label.style.cursor = 'pointer';
+        }
+
+        container.appendChild(row);
+    }
+
+    renderDirectionalAnnotationsList() {
+        const list = document.getElementById('directionalAnnotationsList');
+        const countLabel = document.getElementById('directionalAnnotationCount');
+        if (!list || !countLabel) return;
+
+        countLabel.textContent = `${this.directionalAnnotations.length} annotation${this.directionalAnnotations.length !== 1 ? 's' : ''}`;
+        list.innerHTML = '';
+
+        if (this.directionalAnnotations.length === 0) {
+            list.innerHTML = '<div class="no-annotations">No directional annotations yet.</div>';
+            return;
+        }
+
+        this.directionalAnnotations.forEach(annotation => {
+            const item = document.createElement('div');
+            item.className = 'annotation-item';
+
+            const metaText = `[${annotation.range[0]}, ${annotation.range[1]}] - ${annotation.direction_label}`;
+
+            item.innerHTML = `
+                <div class="annotation-item-info">
+                    <div class="annotation-item-id">${annotation.id}</div>
+                    <div class="annotation-item-meta">${metaText}</div>
+                </div>
+                <div class="annotation-item-query" title="${annotation.query}">${annotation.query}</div>
+                <div class="annotation-item-actions">
+                    <button class="icon-btn edit" title="Edit">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn delete" title="Delete">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            item.querySelector('.icon-btn.edit').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.editDirectionalAnnotation(annotation);
+            });
+
+            item.querySelector('.icon-btn.delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.deleteDirectionalAnnotation(annotation.id);
+            });
+
+            item.addEventListener('click', () => {
+                this.currentFrameIndex = annotation.range[0];
+                this.updateAllSliders();
+                this.updateAllDisplays();
+            });
+
+            list.appendChild(item);
+        });
+    }
+
+    editDirectionalAnnotation(annotation) {
+        this.openDirectionalModal(annotation.range, annotation);
+    }
+
+    deleteDirectionalAnnotation(annotationId) {
+        if (!confirm('Delete this directional annotation?')) return;
+        this.directionalAnnotations = this.directionalAnnotations.filter(a => a.id !== annotationId);
+        this.renderDirectionalTimeline();
+        this.renderDirectionalAnnotationsList();
+        this.updateDirectionalArrowOverlay();
+    }
+
+    updateDirectionalArrowOverlay() {
+        const overlay = document.getElementById('directionalArrowOverlay');
+        const activeLabel = document.getElementById('directionalActiveQueries');
+        if (!overlay || !activeLabel) return;
+
+        const active = this.directionalAnnotations.filter(a => 
+            this.currentFrameIndex >= a.range[0] && this.currentFrameIndex <= a.range[1]
+        );
+
+        if (active.length === 0) {
+            overlay.innerHTML = '';
+            overlay.style.display = 'none';
+            activeLabel.textContent = '';
+        } else {
+            overlay.style.display = 'block';
+            overlay.innerHTML = active.map(a => {
+                const arrowSvg = this.getDirectionArrowSvg(a.direction);
+                return `<div class="directional-arrow-item">
+                    <div class="arrow-visual">${arrowSvg}</div>
+                    <div class="arrow-label">${a.query}: ${a.direction_label}</div>
+                </div>`;
+            }).join('');
+            activeLabel.textContent = `${active.length} active`;
+        }
+    }
+
+    getDirectionArrowSvg(direction) {
+        const { x, y, z } = direction;
+        
+        // Calculate 2D projection of 3D direction for visualization
+        // X maps to horizontal, Y maps to vertical, Z affects size/opacity
+        const arrowLength = 30;
+        const centerX = 40;
+        const centerY = 40;
+        
+        // Normalize direction for 2D display
+        let dx = x * arrowLength;
+        let dy = y * arrowLength;
+        
+        // Z affects the appearance (depth indicator)
+        const zIndicator = z !== 0 ? `<circle cx="${centerX}" cy="${centerY}" r="${z === -1 ? 8 : 4}" fill="${z === -1 ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.5)'}" stroke="white" stroke-width="1"/>` : '';
+        
+        if (x === 0 && y === 0 && z === 0) {
+            // Neutral - show a dot
+            return `<svg width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="${centerX}" cy="${centerY}" r="6" fill="rgba(255,255,255,0.8)" stroke="white" stroke-width="2"/>
+            </svg>`;
+        }
+        
+        const endX = centerX + dx;
+        const endY = centerY + dy;
+        
+        // Arrow head
+        const angle = Math.atan2(dy, dx);
+        const headLen = 10;
+        const head1X = endX - headLen * Math.cos(angle - Math.PI / 6);
+        const head1Y = endY - headLen * Math.sin(angle - Math.PI / 6);
+        const head2X = endX - headLen * Math.cos(angle + Math.PI / 6);
+        const head2Y = endY - headLen * Math.sin(angle + Math.PI / 6);
+        
+        return `<svg width="80" height="80" viewBox="0 0 80 80">
+            ${zIndicator}
+            <line x1="${centerX}" y1="${centerY}" x2="${endX}" y2="${endY}" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="${endX},${endY} ${head1X},${head1Y} ${head2X},${head2Y}" fill="white"/>
+        </svg>`;
+    }
+
     // ==================== SAVE ====================
 
     async saveAnnotations() {
@@ -736,21 +1355,34 @@ class AnnotationTool {
 
         // Save temporal
         try {
-            const response = await fetch(`/api/clips/${this.currentClip.name}/temporal-annotations`, {
+            await fetch(`/api/clips/${this.currentClip.name}/temporal-annotations`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ annotations: this.temporalAnnotations })
+            });
+        } catch (error) {
+            console.error('Failed to save temporal annotations:', error);
+            alert('Failed to save temporal annotations');
+            return;
+        }
+
+        // Save directional
+        try {
+            const response = await fetch(`/api/clips/${this.currentClip.name}/directional-annotations`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ annotations: this.directionalAnnotations })
             });
 
             if (response.ok) {
                 alert('Annotations saved successfully!');
                 await this.loadAnnotationCounts();
             } else {
-                alert('Failed to save temporal annotations');
+                alert('Failed to save directional annotations');
             }
         } catch (error) {
-            console.error('Failed to save temporal annotations:', error);
-            alert('Failed to save temporal annotations');
+            console.error('Failed to save directional annotations:', error);
+            alert('Failed to save directional annotations');
         }
     }
 

@@ -8,8 +8,10 @@ app = Flask(__name__)
 PREPARED_DATA_DIR = Path(__file__).parent.parent / "prepared_data"
 SPATIAL_ANNOTATIONS_DIR = Path(__file__).parent.parent / "annotations" / "spatial"
 TEMPORAL_ANNOTATIONS_DIR = Path(__file__).parent.parent / "annotations" / "temporal"
+DIRECTIONAL_ANNOTATIONS_DIR = Path(__file__).parent.parent / "annotations" / "directional"
 SPATIAL_ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
 TEMPORAL_ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
+DIRECTIONAL_ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
 
 def load_clips():
     config_path = Path(__file__).parent.parent / "config.yaml"
@@ -33,6 +35,14 @@ def get_temporal_annotation_count(clip_name):
             return len(data.get("annotations", []))
     return 0
 
+def get_directional_annotation_count(clip_name):
+    annotation_file = DIRECTIONAL_ANNOTATIONS_DIR / f"{clip_name}.json"
+    if annotation_file.exists():
+        with open(annotation_file) as f:
+            data = json.load(f)
+            return len(data.get("annotations", []))
+    return 0
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -49,7 +59,8 @@ def get_annotation_counts():
     for clip in clips:
         counts[clip["name"]] = {
             "spatial": get_spatial_annotation_count(clip["name"]),
-            "temporal": get_temporal_annotation_count(clip["name"])
+            "temporal": get_temporal_annotation_count(clip["name"]),
+            "directional": get_directional_annotation_count(clip["name"])
         }
     return jsonify(counts)
 
@@ -87,6 +98,24 @@ def handle_temporal_annotations(clip_name):
     # Ensure directory exists
     TEMPORAL_ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
     annotation_file = TEMPORAL_ANNOTATIONS_DIR / f"{clip_name}.json"
+
+    if request.method == "GET":
+        if annotation_file.exists():
+            with open(annotation_file) as f:
+                return jsonify(json.load(f))
+        return jsonify({"annotations": []})
+
+    elif request.method == "POST":
+        data = request.get_json()
+        with open(annotation_file, "w") as f:
+            json.dump(data, f, indent=2)
+        return jsonify({"success": True})
+
+# Directional annotations endpoint
+@app.route("/api/clips/<clip_name>/directional-annotations", methods=["GET", "POST"])
+def handle_directional_annotations(clip_name):
+    DIRECTIONAL_ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
+    annotation_file = DIRECTIONAL_ANNOTATIONS_DIR / f"{clip_name}.json"
 
     if request.method == "GET":
         if annotation_file.exists():
