@@ -1,0 +1,175 @@
+cholecseg8k_clips:
+  - name: video01_00240 # string identifier
+    video_id: 1 # cholec80/cholecseg8k video id
+    first_frame: 240 # first frame (inclusive)
+    last_frame: 320 # last frame (exclusive)
+    original_frame_stride: 1 # stride from which to create video
+    annotation_frame_stride: 4 # stride from which to create annotations
+
+  - name: video01_15019
+    video_id: 1
+    first_frame: 15019
+    last_frame: 15099
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video01_28580
+    video_id: 1
+    first_frame: 28580
+    last_frame: 28660
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video12_19500
+    video_id: 12
+    first_frame: 19500
+    last_frame: 19580
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video12_19660
+    video_id: 12
+    first_frame: 19660
+    last_frame: 19740
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video12_19740
+    video_id: 12
+    first_frame: 19740
+    last_frame: 19820
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video12_19980
+    video_id: 12
+    first_frame: 19980
+    last_frame: 20060
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video17_01563
+    video_id: 17
+    first_frame: 1563
+    last_frame: 1643
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video17_01803
+    video_id: 17
+    first_frame: 1803
+    last_frame: 1883
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video18_00979
+    video_id: 18
+    first_frame: 979
+    last_frame: 1059
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video20_03260
+    video_id: 20
+    first_frame: 3260
+    last_frame: 3340
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video24_09676
+    video_id: 24
+    first_frame: 9676
+    last_frame: 9756
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video24_09836
+    video_id: 24
+    first_frame: 9836
+    last_frame: 9916
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video24_09916
+    video_id: 24
+    first_frame: 9916
+    last_frame: 9996
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video25_00162
+    video_id: 25
+    first_frame: 162
+    last_frame: 242
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video25_00402
+    video_id: 25
+    first_frame: 402
+    last_frame: 482
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video25_00482
+    video_id: 25
+    first_frame: 482
+    last_frame: 562
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video27_00640
+    video_id: 27
+    first_frame: 640
+    last_frame: 720
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video28_00320
+    video_id: 28
+    first_frame: 320
+    last_frame: 400
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video35_00940
+    video_id: 35
+    first_frame: 940
+    last_frame: 1020
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video43_00787
+    video_id: 43
+    first_frame: 787
+    last_frame: 867
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video48_00641
+    video_id: 48
+    first_frame: 641
+    last_frame: 721
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video52_00160
+    video_id: 52
+    first_frame: 160
+    last_frame: 240
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video52_02826
+    video_id: 52
+    first_frame: 2826
+    last_frame: 2906
+    original_frame_stride: 1
+    annotation_frame_stride: 4
+
+  - name: video55_00588
+    video_id: 55
+    first_frame: 588
+    last_frame: 668
+    original_frame_stride: 1
+    annotation_frame_stride: 4

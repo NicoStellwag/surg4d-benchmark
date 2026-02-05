@@ -1,0 +1,9 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# data
+cholecseg8k.zip
+cholecseg8k/
+prepared_data/
+annotations/

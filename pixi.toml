@@ -1,0 +1,15 @@
+[workspace]
+authors = ["NicoStellwag <nico.stellwag@gmail.com>"]
+channels = ["conda-forge"]
+name = "cholec4d"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = ">=3.14.3,<3.15"
+
+[pypi-dependencies]
+opencv-python = ">=4.13.0.92, <5"
+pyyaml = ">=6.0.3, <7"
