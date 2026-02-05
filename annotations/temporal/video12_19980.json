@@ -1,0 +1,15 @@
+{
+  "annotations": [
+    {
+      "id": "video12_19980_temporal_rng_0",
+      "type": "range",
+      "query": "When is the dissection tool coagulating the gallbladder?",
+      "ranges": [
+        [
+          17,
+          19
+        ]
+      ]
+    }
+  ]
+}

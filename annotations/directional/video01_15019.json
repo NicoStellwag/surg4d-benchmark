@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video01_15019_directional_0",
+      "range": [
+        11,
+        16
+      ],
+      "query": "In which direction is the dissection tool pulling?",
+      "direction": {
+        "x": 1,
+        "y": 0,
+        "z": -1
+      },
+      "direction_label": "Right, To Camera"
+    }
+  ]
+}

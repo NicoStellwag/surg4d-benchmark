@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "frame": 14,
+      "id": "video01_28580_temporal_pit_0",
+      "query": "When has the dissection tool snapped away from the gallbladder?",
+      "type": "pit"
+    },
+    {
+      "id": "video01_28580_temporal_rng_0",
+      "query": "When is the dissection tool actively coagulating the gallbladder?",
+      "ranges": [
+        [
+          12,
+          13
+        ]
+      ],
+      "type": "range"
+    },
+    {
+      "id": "video01_28580_temporal_rng_1",
+      "query": "When is the dissection tool touching the gallbladder?",
+      "ranges": [
+        [
+          0,
+          13
+        ]
+      ],
+      "type": "range"
+    }
+  ]
+}

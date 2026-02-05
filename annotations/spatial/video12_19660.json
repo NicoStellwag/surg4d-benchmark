@@ -1,0 +1,46 @@
+{
+  "annotations": [
+    {
+      "id": "video12_19660_spatial_0",
+      "frame_consecutive": 15,
+      "frame_original": 19720,
+      "pil_coords": [
+        445,
+        75
+      ],
+      "numpy_coords": [
+        75,
+        445
+      ],
+      "query": "Where is the top grasper holding the gallbladder?"
+    },
+    {
+      "id": "video12_19660_spatial_1",
+      "frame_consecutive": 4,
+      "frame_original": 19676,
+      "pil_coords": [
+        406,
+        158
+      ],
+      "numpy_coords": [
+        158,
+        406
+      ],
+      "query": "Where is the dissection tool coagulating the gallbladder?"
+    },
+    {
+      "id": "video12_19660_spatial_2",
+      "frame_consecutive": 19,
+      "frame_original": 19736,
+      "pil_coords": [
+        376,
+        221
+      ],
+      "numpy_coords": [
+        221,
+        376
+      ],
+      "query": "Where is the tip of the front, left grasper's lower jaw?"
+    }
+  ]
+}

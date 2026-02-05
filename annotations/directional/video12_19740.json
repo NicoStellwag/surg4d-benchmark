@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "direction": {
+        "x": 0,
+        "y": 1,
+        "z": -1
+      },
+      "direction_label": "Down, To Camera",
+      "id": "video12_19740_directional_0",
+      "query": "In which direction is the liver moving?",
+      "range": [
+        11,
+        15
+      ]
+    }
+  ]
+}

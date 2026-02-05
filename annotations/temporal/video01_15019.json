@@ -1,0 +1,21 @@
+{
+  "annotations": [
+    {
+      "frame": 16,
+      "id": "video01_15019_temporal_pit_0",
+      "query": "When does the dissection tool start to apply electrical current?",
+      "type": "pit"
+    },
+    {
+      "id": "video01_15019_temporal_rng_0",
+      "query": "When is the dissection tool actively dissecting the gallbladder?",
+      "ranges": [
+        [
+          16,
+          19
+        ]
+      ],
+      "type": "range"
+    }
+  ]
+}

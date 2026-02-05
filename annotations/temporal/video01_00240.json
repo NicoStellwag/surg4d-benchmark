@@ -1,0 +1,21 @@
+{
+  "annotations": [
+    {
+      "frame": 11,
+      "id": "video01_00240_temporal_pit_0",
+      "query": "When does the grasper begin to hold the gallbladder?",
+      "type": "pit"
+    },
+    {
+      "id": "video01_00240_temporal_rng_0",
+      "query": "When is the grasper holding the gallbladder?",
+      "ranges": [
+        [
+          11,
+          19
+        ]
+      ],
+      "type": "range"
+    }
+  ]
+}

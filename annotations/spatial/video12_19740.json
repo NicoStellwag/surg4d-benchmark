@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "frame_consecutive": 17,
+      "frame_original": 19808,
+      "id": "video12_19740_spatial_0",
+      "numpy_coords": [
+        175,
+        484
+      ],
+      "pil_coords": [
+        484,
+        175
+      ],
+      "query": "Where is the grasper currently letting go of the gallbladder?"
+    },
+    {
+      "frame_consecutive": 5,
+      "frame_original": 19760,
+      "id": "video12_19740_spatial_1",
+      "numpy_coords": [
+        66,
+        466
+      ],
+      "pil_coords": [
+        466,
+        66
+      ],
+      "query": "Where is the grasper holding the part of the gallbladder that is still attached to the liver?"
+    }
+  ]
+}
