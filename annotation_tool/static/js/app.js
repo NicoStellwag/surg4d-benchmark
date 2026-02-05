@@ -20,7 +20,9 @@ class AnnotationTool {
             query: '',
             annotationId: null,
             ranges: [],
-            dragStart: null  // frame index where shift+drag started
+            dragStart: null,  // frame index where shift+drag started
+            shiftStart: undefined,  // frame index where shift+arrow started
+            currentRangeIdx: undefined  // index of range currently being built with shift+arrow
         };
 
         // Directional annotation state
@@ -28,7 +30,8 @@ class AnnotationTool {
         this.directionalRangeMode = {
             active: false,
             range: null,
-            dragStart: null
+            dragStart: null,
+            shiftStart: undefined  // frame index where shift+arrow started
         };
         this.pendingDirectional = null;
 
@@ -305,7 +308,9 @@ class AnnotationTool {
             query: query.trim(),
             annotationId: `${this.currentClip.name}_temporal_rng_${rangeCount}`,
             ranges: [],
-            dragStart: null
+            dragStart: null,
+            shiftStart: undefined,
+            currentRangeIdx: undefined
         };
 
         // Update UI
@@ -339,7 +344,9 @@ class AnnotationTool {
             query: '',
             annotationId: null,
             ranges: [],
-            dragStart: null
+            dragStart: null,
+            shiftStart: undefined,
+            currentRangeIdx: undefined
         };
 
         // Update UI
@@ -856,7 +863,8 @@ class AnnotationTool {
         this.directionalRangeMode = {
             active: true,
             range: null,
-            dragStart: null
+            dragStart: null,
+            shiftStart: undefined
         };
 
         const btn = document.getElementById('addDirectionalBtn');
@@ -1448,7 +1456,12 @@ class AnnotationTool {
         img.src = frameUrl;
 
         if (type === 'spatial') {
-            img.onload = () => this.renderAnnotationsOnFrame();
+            // Handle both cached images (already loaded) and new images
+            if (img.complete && img.naturalWidth > 0) {
+                this.renderAnnotationsOnFrame();
+            } else {
+                img.onload = () => this.renderAnnotationsOnFrame();
+            }
         }
     }
 
@@ -1475,7 +1488,9 @@ class AnnotationTool {
         this.updateFrameDisplay('directional');
         this.updateFrameLabels();
         this.renderTimeline();
+        this.renderDirectionalTimeline();
         this.updateTemporalFrameOverlay();
+        this.updateDirectionalArrowOverlay();
     }
 
     // ==================== TABS ====================
@@ -1525,6 +1540,115 @@ class AnnotationTool {
                 this.closeModal();
             }
         });
+
+        // Keyboard navigation for frame switching and range selection
+        this.setupKeyboardNavigation();
+    }
+
+    setupKeyboardNavigation() {
+        // Use capture phase to intercept arrow keys before other elements handle them
+        document.addEventListener('keydown', (e) => {
+            const isArrowLeft = e.key === 'ArrowLeft';
+            const isArrowRight = e.key === 'ArrowRight';
+
+            if (!isArrowLeft && !isArrowRight) return;
+
+            // Don't handle if typing in text input/textarea (but DO handle for range sliders)
+            const isTextInput = e.target.tagName === 'TEXTAREA' || 
+                (e.target.tagName === 'INPUT' && e.target.type !== 'range');
+            if (isTextInput) return;
+            
+            // Don't handle if modal is open
+            if (document.querySelector('.modal.active')) return;
+            if (!this.currentClip || this.frameData.length === 0) return;
+
+            // Prevent default browser behavior (slider movement, scrolling, etc.)
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Blur any focused element to prevent conflicts
+            if (document.activeElement && document.activeElement !== document.body) {
+                document.activeElement.blur();
+            }
+
+            const direction = isArrowRight ? 1 : -1;
+            const newIndex = Math.max(0, Math.min(this.frameData.length - 1, this.currentFrameIndex + direction));
+
+            if (newIndex === this.currentFrameIndex) return;
+
+            // Get active tab
+            const activeTab = document.querySelector('.tab-button.active')?.dataset.tab;
+
+            // Handle shift+arrow for range selection in temporal tab
+            if (e.shiftKey && activeTab === 'temporal' && this.rangeMode.active) {
+                this.handleTemporalShiftArrow(newIndex);
+            }
+            // Handle shift+arrow for range selection in directional tab
+            else if (e.shiftKey && activeTab === 'directional' && this.directionalRangeMode.active) {
+                this.handleDirectionalShiftArrow(newIndex);
+            }
+
+            // Always update the frame
+            this.currentFrameIndex = newIndex;
+            this.updateAllSliders();
+            this.updateAllDisplays();
+        }, true);  // Use capture phase
+
+        // Reset shift-range state when shift is released
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Shift') {
+                // Finalize temporal range - keep the range but reset shift tracking
+                if (this.rangeMode.shiftStart !== undefined) {
+                    this.rangeMode.shiftStart = undefined;
+                    this.rangeMode.currentRangeIdx = undefined;
+                }
+                // Finalize directional range
+                if (this.directionalRangeMode.shiftStart !== undefined) {
+                    this.directionalRangeMode.shiftStart = undefined;
+                }
+            }
+        }, true);  // Use capture phase
+    }
+
+    handleTemporalShiftArrow(newIndex) {
+        // If no range started yet, start from current position (before move)
+        if (this.rangeMode.shiftStart === undefined) {
+            this.rangeMode.shiftStart = this.currentFrameIndex;
+        }
+
+        const startFrame = this.rangeMode.shiftStart;
+        const endFrame = newIndex;
+        const range = [Math.min(startFrame, endFrame), Math.max(startFrame, endFrame)];
+
+        // Update or add the current range being built
+        if (this.rangeMode.currentRangeIdx !== undefined) {
+            this.rangeMode.ranges[this.rangeMode.currentRangeIdx] = range;
+        } else {
+            this.rangeMode.ranges.push(range);
+            this.rangeMode.currentRangeIdx = this.rangeMode.ranges.length - 1;
+        }
+
+        // Update button text
+        const btn = document.getElementById('addTemporalRangeBtn');
+        btn.textContent = `Done (${this.rangeMode.ranges.length} range${this.rangeMode.ranges.length !== 1 ? 's' : ''})`;
+
+        this.renderTimeline();
+        this.updateRangeModeStatus();
+    }
+
+    handleDirectionalShiftArrow(newIndex) {
+        // If no range started yet, start from current position (before move)
+        if (this.directionalRangeMode.shiftStart === undefined) {
+            this.directionalRangeMode.shiftStart = this.currentFrameIndex;
+        }
+
+        const startFrame = this.directionalRangeMode.shiftStart;
+        const endFrame = newIndex;
+        const range = [Math.min(startFrame, endFrame), Math.max(startFrame, endFrame)];
+
+        this.directionalRangeMode.range = range;
+        this.updateDirectionalRangeStatus();
+        this.renderDirectionalTimeline();
     }
 
     // ==================== SPATIAL ANNOTATIONS ====================
@@ -1552,22 +1676,25 @@ class AnnotationTool {
             const rect = frameContainer.getBoundingClientRect();
             const img = document.getElementById('spatialFrame');
 
-            const displayWidth = img.clientWidth;
-            const displayHeight = img.clientHeight;
+            // Use container dimensions, not image dimensions (image uses object-fit: contain)
+            const containerWidth = frameContainer.clientWidth;
+            const containerHeight = frameContainer.clientHeight;
             const imgAspect = img.naturalWidth / img.naturalHeight;
-            const containerAspect = displayWidth / displayHeight;
+            const containerAspect = containerWidth / containerHeight;
 
             let actualImgWidth, actualImgHeight, offsetX, offsetY;
 
             if (imgAspect > containerAspect) {
-                actualImgWidth = displayWidth;
-                actualImgHeight = displayWidth / imgAspect;
+                // Image is wider than container - letterboxed top/bottom
+                actualImgWidth = containerWidth;
+                actualImgHeight = containerWidth / imgAspect;
                 offsetX = 0;
-                offsetY = (displayHeight - actualImgHeight) / 2;
+                offsetY = (containerHeight - actualImgHeight) / 2;
             } else {
-                actualImgHeight = displayHeight;
-                actualImgWidth = displayHeight * imgAspect;
-                offsetX = (displayWidth - actualImgWidth) / 2;
+                // Image is taller than container - letterboxed left/right
+                actualImgHeight = containerHeight;
+                actualImgWidth = containerHeight * imgAspect;
+                offsetX = (containerWidth - actualImgWidth) / 2;
                 offsetY = 0;
             }
 
@@ -1587,6 +1714,12 @@ class AnnotationTool {
 
             this.openAnnotationModal({ pilX, pilY, numpyRow, numpyCol });
         });
+
+        // Re-render annotations when container resizes
+        const resizeObserver = new ResizeObserver(() => {
+            this.renderAnnotationsOnFrame();
+        });
+        resizeObserver.observe(frameContainer);
     }
 
     openAnnotationModal(coords) {
@@ -1731,22 +1864,25 @@ class AnnotationTool {
         const currentFrame = this.frameData[this.currentFrameIndex];
         if (!currentFrame) return;
 
-        const displayWidth = img.clientWidth;
-        const displayHeight = img.clientHeight;
+        // Use container dimensions, not image dimensions (image uses object-fit: contain)
+        const containerWidth = frameContainer.clientWidth;
+        const containerHeight = frameContainer.clientHeight;
         const imgAspect = img.naturalWidth / img.naturalHeight;
-        const containerAspect = displayWidth / displayHeight;
+        const containerAspect = containerWidth / containerHeight;
 
         let actualImgWidth, actualImgHeight, offsetX, offsetY;
 
         if (imgAspect > containerAspect) {
-            actualImgWidth = displayWidth;
-            actualImgHeight = displayWidth / imgAspect;
+            // Image is wider than container - letterboxed top/bottom
+            actualImgWidth = containerWidth;
+            actualImgHeight = containerWidth / imgAspect;
             offsetX = 0;
-            offsetY = (displayHeight - actualImgHeight) / 2;
+            offsetY = (containerHeight - actualImgHeight) / 2;
         } else {
-            actualImgHeight = displayHeight;
-            actualImgWidth = displayHeight * imgAspect;
-            offsetX = (displayWidth - actualImgWidth) / 2;
+            // Image is taller than container - letterboxed left/right
+            actualImgHeight = containerHeight;
+            actualImgWidth = containerHeight * imgAspect;
+            offsetX = (containerWidth - actualImgWidth) / 2;
             offsetY = 0;
         }
 
