@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cholec4D Annotation Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar: Clip Explorer -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Clip Explorer</h1>
+            </div>
+            <div class="clip-list" id="clipList">
+                <!-- Clips will be loaded here -->
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="clip-header">
+                <h2 id="currentClipName">Select a clip</h2>
+                <button class="save-btn" id="saveBtn" style="display:none;">Save Annotations</button>
+            </div>
+
+            <!-- Annotation Type Tabs -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="spatial">Spatial</button>
+                    <button class="tab-button" data-tab="temporal">Temporal</button>
+                    <button class="tab-button" data-tab="directional">Directional</button>
+                </div>
+
+                <!-- Spatial Tab -->
+                <div class="tab-content active" id="spatial-tab">
+                    <div class="spatial-content">
+                        <div class="media-container">
+                            <div class="video-section">
+                                <h3>Video</h3>
+                                <video id="spatialVideo" controls>
+                                    <source src="" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="frame-section">
+                                <h3>Frame <span class="frame-hint">(Click to add annotation)</span></h3>
+                                <div class="frame-display" id="spatialFrameContainer">
+                                    <img id="spatialFrame" src="" alt="Frame">
+                                </div>
+                                <div class="frame-controls">
+                                    <input type="range" id="spatialFrameSlider" min="0" max="0" value="0">
+                                    <span id="spatialFrameLabel">Frame 00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Spatial Annotations Explorer -->
+                        <div class="annotations-explorer" id="annotationsExplorer">
+                            <div class="explorer-header">
+                                <h3>Spatial Annotations</h3>
+                                <span id="annotationCount">0 annotations</span>
+                            </div>
+                            <div class="annotations-list" id="annotationsList">
+                                <!-- Annotations will be listed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temporal Tab -->
+                <div class="tab-content" id="temporal-tab">
+                    <div class="temporal-content">
+                        <div class="media-container">
+                            <div class="video-section">
+                                <h3>Video</h3>
+                                <video id="temporalVideo" controls>
+                                    <source src="" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="frame-section">
+                                <h3>Frame <span id="temporalActiveQueries" class="frame-hint"></span></h3>
+                                <div class="frame-display" id="temporalFrameContainer">
+                                    <img id="temporalFrame" src="" alt="Frame">
+                                    <div id="temporalQueryOverlay" class="temporal-query-overlay"></div>
+                                </div>
+                                <div class="frame-controls">
+                                    <input type="range" id="temporalFrameSlider" min="0" max="0" value="0">
+                                    <span id="temporalFrameLabel">Frame 00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Temporal Timeline -->
+                        <div class="temporal-timeline-container">
+                            <div class="timeline-header">
+                                <h3>Temporal Annotations</h3>
+                                <div class="timeline-actions">
+                                    <button class="btn-small" id="addTemporalPitBtn">Add Point</button>
+                                    <button class="btn-small" id="addTemporalRangeBtn">Add Range</button>
+                                </div>
+                            </div>
+                            <div class="range-selection-status" id="rangeSelectionStatus" style="display:none;">
+                                <span class="status-icon">+</span>
+                                <span class="status-text">Range selection mode: Hold Shift and drag on the slider to select ranges</span>
+                                <span class="status-count" id="rangeSelectionCount"></span>
+                            </div>
+                            <div class="timeline-wrapper">
+                                <div class="timeline-content">
+                                    <div class="timeline-scale" id="timelineScale"></div>
+                                    <div class="timeline-annotations" id="timelineAnnotations">
+                                        <!-- Timeline annotations will be rendered here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Temporal Annotations Explorer -->
+                        <div class="annotations-explorer" id="temporalAnnotationsExplorer">
+                            <div class="explorer-header">
+                                <h3>Temporal Annotations List</h3>
+                                <span id="temporalAnnotationCount">0 annotations</span>
+                            </div>
+                            <div class="annotations-list" id="temporalAnnotationsList">
+                                <!-- Temporal annotations will be listed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Directional Tab -->
+                <div class="tab-content" id="directional-tab">
+                    <div class="media-container">
+                        <div class="video-section">
+                            <h3>Video</h3>
+                            <video id="directionalVideo" controls>
+                                <source src="" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="frame-section">
+                            <h3>Frame</h3>
+                            <div class="frame-display">
+                                <img id="directionalFrame" src="" alt="Frame">
+                            </div>
+                            <div class="frame-controls">
+                                <input type="range" id="directionalFrameSlider" min="0" max="0" value="0">
+                                <span id="directionalFrameLabel">Frame 00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Spatial Annotation Popup Modal -->
+    <div id="annotationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Spatial Annotation</h3>
+                <span class="modal-close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="annotation-info">
+                    <div class="info-row">
+                        <label>Annotation ID:</label>
+                        <span id="annotationId" class="value monospace"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Frame:</label>
+                        <span id="annotationFrame" class="value"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Pixel Coordinates (PIL):</label>
+                        <span id="annotationPilCoords" class="value monospace"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Numpy Coordinates:</label>
+                        <span id="annotationNumpyCoords" class="value monospace"></span>
+                    </div>
+                </div>
+                <div class="query-input">
+                    <label for="queryText">Query Text:</label>
+                    <textarea id="queryText" placeholder="Enter your query about this location..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancel">Cancel</button>
+                <button class="btn-primary" id="modalSave">Save Annotation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Temporal Annotation Edit Modal -->
+    <div id="temporalEditModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="temporalEditModalTitle">Edit Temporal Annotation</h3>
+                <span class="modal-close" id="temporalEditModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="annotation-info">
+                    <div class="info-row">
+                        <label>Annotation ID:</label>
+                        <span id="temporalEditId" class="value monospace"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Type:</label>
+                        <span id="temporalEditType" class="value"></span>
+                    </div>
+                </div>
+                
+                <!-- Point in Time Section -->
+                <div id="temporalEditPitSection" class="temporal-input-section">
+                    <label>Frame:</label>
+                    <div class="frame-selector">
+                        <input type="number" id="temporalEditFrame" min="0" style="width: 100px; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                        <button class="btn-small" id="temporalEditUseCurrentFrame" style="margin-left: 12px;">Use Current Frame</button>
+                    </div>
+                </div>
+                
+                <!-- Range Section -->
+                <div id="temporalEditRangeSection" class="temporal-input-section" style="display:none;">
+                    <label>Ranges:</label>
+                    <div class="range-input" style="margin-top: 8px;">
+                        <input type="number" id="temporalEditRangeStart" placeholder="Start" min="0" style="width: 80px; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                        <span style="margin: 0 8px;">to</span>
+                        <input type="number" id="temporalEditRangeEnd" placeholder="End" min="0" style="width: 80px; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
+                        <button class="btn-small" id="temporalEditAddRange" style="margin-left: 12px;">Add</button>
+                    </div>
+                    <div class="ranges-list" id="temporalEditRangesList" style="margin-top: 12px;"></div>
+                </div>
+                
+                <div class="query-input">
+                    <label for="temporalEditQuery">Query Text:</label>
+                    <textarea id="temporalEditQuery" placeholder="Enter your temporal query..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="temporalEditModalCancel">Cancel</button>
+                <button class="btn-primary" id="temporalEditModalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
