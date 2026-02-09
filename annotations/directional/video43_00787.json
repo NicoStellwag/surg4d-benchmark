@@ -1,0 +1,46 @@
+{
+  "annotations": [
+    {
+      "id": "video43_00787_directional_0",
+      "range": [
+        0,
+        9
+      ],
+      "query": "In which direction is the grasper pulling the gallbladder?",
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Up"
+    },
+    {
+      "id": "video43_00787_directional_1",
+      "range": [
+        0,
+        9
+      ],
+      "query": "In which direction is the fat moving?",
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Up"
+    },
+    {
+      "id": "video43_00787_directional_2",
+      "range": [
+        0,
+        9
+      ],
+      "query": "In which direction is the liver moving?",
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Up"
+    }
+  ]
+}

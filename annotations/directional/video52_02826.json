@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video52_02826_directional_0",
+      "range": [
+        5,
+        6
+      ],
+      "query": "In which direction is the left grasper pulling the gallbladder?",
+      "direction": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Left, Up"
+    }
+  ]
+}

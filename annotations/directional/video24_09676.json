@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video24_09676_directional_0",
+      "range": [
+        0,
+        12
+      ],
+      "query": "In which direction is the front grasper's tip moving?",
+      "direction": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "direction_label": "From Camera"
+    }
+  ]
+}

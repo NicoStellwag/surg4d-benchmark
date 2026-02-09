@@ -1,0 +1,15 @@
+{
+  "annotations": [
+    {
+      "id": "video25_00162_temporal_rng_0",
+      "type": "range",
+      "query": "When is the grasper touching the gallbladder fundus?",
+      "ranges": [
+        [
+          10,
+          19
+        ]
+      ]
+    }
+  ]
+}

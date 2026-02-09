@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video35_00940_spatial_0",
+      "frame_consecutive": 7,
+      "frame_original": 968,
+      "pil_coords": [
+        445,
+        224
+      ],
+      "numpy_coords": [
+        224,
+        445
+      ],
+      "query": "Where does the grasper hold the gallbladder?"
+    }
+  ]
+}

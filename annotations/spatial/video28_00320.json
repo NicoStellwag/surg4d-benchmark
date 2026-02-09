@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video28_00320_spatial_0",
+      "frame_consecutive": 4,
+      "frame_original": 336,
+      "pil_coords": [
+        502,
+        322
+      ],
+      "numpy_coords": [
+        322,
+        502
+      ],
+      "query": "Where does the right grasper touch the fat?"
+    }
+  ]
+}

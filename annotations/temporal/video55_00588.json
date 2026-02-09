@@ -1,0 +1,26 @@
+{
+  "annotations": [
+    {
+      "id": "video55_00588_temporal_rng_0",
+      "type": "range",
+      "query": "When are front and back grasper stretching the gallbladder?",
+      "ranges": [
+        [
+          0,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "video55_00588_temporal_rng_1",
+      "type": "range",
+      "query": "When is the dissection tool touching the gallbladder?",
+      "ranges": [
+        [
+          0,
+          19
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "id": "video24_09916_directional_0",
+      "range": [
+        13,
+        17
+      ],
+      "query": "In which direction is the gallbladder collum pulled towards?",
+      "direction": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      },
+      "direction_label": "Left"
+    },
+    {
+      "id": "video24_09916_directional_1",
+      "range": [
+        0,
+        4
+      ],
+      "query": "In which direction is the grasper moving?",
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Up"
+    }
+  ]
+}

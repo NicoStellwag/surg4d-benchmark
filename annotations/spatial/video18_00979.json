@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "id": "video18_00979_spatial_0",
+      "frame_consecutive": 4,
+      "frame_original": 995,
+      "pil_coords": [
+        392,
+        207
+      ],
+      "numpy_coords": [
+        207,
+        392
+      ],
+      "query": "Where does the grasper hold the gallbladder?"
+    },
+    {
+      "id": "video18_00979_spatial_1",
+      "frame_consecutive": 17,
+      "frame_original": 1047,
+      "pil_coords": [
+        339,
+        260
+      ],
+      "numpy_coords": [
+        260,
+        339
+      ],
+      "query": "Where does the dissection tool poke into the gallbladder?"
+    }
+  ]
+}

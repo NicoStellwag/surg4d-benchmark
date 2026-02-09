@@ -1,0 +1,46 @@
+{
+  "annotations": [
+    {
+      "id": "video43_00787_spatial_0",
+      "frame_consecutive": 0,
+      "frame_original": 787,
+      "pil_coords": [
+        413,
+        259
+      ],
+      "numpy_coords": [
+        259,
+        413
+      ],
+      "query": "Where is the grasper holding the gallbladder?"
+    },
+    {
+      "id": "video43_00787_spatial_1",
+      "frame_consecutive": 4,
+      "frame_original": 803,
+      "pil_coords": [
+        480,
+        157
+      ],
+      "numpy_coords": [
+        157,
+        480
+      ],
+      "query": "Where is the grasper holding the gallbladder?"
+    },
+    {
+      "id": "video43_00787_spatial_2",
+      "frame_consecutive": 19,
+      "frame_original": 863,
+      "pil_coords": [
+        452,
+        111
+      ],
+      "numpy_coords": [
+        111,
+        452
+      ],
+      "query": "Where is the grasper holding the gallbladder?"
+    }
+  ]
+}

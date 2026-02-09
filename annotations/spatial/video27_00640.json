@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "id": "video27_00640_spatial_0",
+      "frame_consecutive": 13,
+      "frame_original": 692,
+      "pil_coords": [
+        414,
+        263
+      ],
+      "numpy_coords": [
+        263,
+        414
+      ],
+      "query": "Where does the left grasper touch the gallbladder?"
+    },
+    {
+      "id": "video27_00640_spatial_1",
+      "frame_consecutive": 13,
+      "frame_original": 692,
+      "pil_coords": [
+        466,
+        273
+      ],
+      "numpy_coords": [
+        273,
+        466
+      ],
+      "query": "Where does the right grasper touch the gallbladder?"
+    }
+  ]
+}

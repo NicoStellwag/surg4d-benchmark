@@ -1,0 +1,38 @@
+{
+  "annotations": [
+    {
+      "id": "video24_09836_temporal_rng_0",
+      "type": "range",
+      "query": "When are both graspers touching the gallbladder?",
+      "ranges": [
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "video24_09836_temporal_pit_0",
+      "type": "pit",
+      "query": "At which point in time are both graspers closest to each other?",
+      "frame": 0
+    },
+    {
+      "id": "video24_09836_temporal_pit_1",
+      "type": "pit",
+      "query": "When do both graspers' tips have the same depth with respect to the camera?",
+      "frame": 0
+    },
+    {
+      "id": "video24_09836_temporal_rng_1",
+      "type": "range",
+      "query": "When does the right grasper push back on the liver the strongest?",
+      "ranges": [
+        [
+          9,
+          12
+        ]
+      ]
+    }
+  ]
+}

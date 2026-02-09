@@ -1,0 +1,60 @@
+{
+  "annotations": [
+    {
+      "id": "video55_00588_spatial_0",
+      "frame_consecutive": 0,
+      "frame_original": 588,
+      "pil_coords": [
+        401,
+        8
+      ],
+      "numpy_coords": [
+        8,
+        401
+      ],
+      "query": "Where is the top grasper holding the gallbladder?"
+    },
+    {
+      "id": "video55_00588_spatial_1",
+      "frame_consecutive": 0,
+      "frame_original": 588,
+      "pil_coords": [
+        418,
+        345
+      ],
+      "numpy_coords": [
+        345,
+        418
+      ],
+      "query": "Where is the bottom grasper holding tissue?"
+    },
+    {
+      "id": "video55_00588_spatial_2",
+      "frame_consecutive": 6,
+      "frame_original": 612,
+      "pil_coords": [
+        416,
+        198
+      ],
+      "numpy_coords": [
+        198,
+        416
+      ],
+      "query": "Where is the dissection tool being inserted into the gallbladder?"
+    },
+    {
+      "id": "video55_00588_spatial_3",
+      "frame_consecutive": 16,
+      "frame_original": 652,
+      "pil_coords": [
+        418,
+        163
+      ],
+      "numpy_coords": [
+        163,
+        418
+      ],
+      "query": "Where is the dissection tool hooked into the gallbladder?"
+    }
+  ]
+}

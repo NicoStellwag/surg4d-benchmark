@@ -1,0 +1,18 @@
+{
+  "annotations": [
+    {
+      "id": "video18_00979_directional_0",
+      "range": [
+        3,
+        11
+      ],
+      "query": "In which direction relative to the grasper does the dissection tool start interacting with the gallbladder?",
+      "direction": {
+        "x": 1,
+        "y": 1,
+        "z": 0
+      },
+      "direction_label": "Right, Down"
+    }
+  ]
+}

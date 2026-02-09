@@ -1,0 +1,15 @@
+{
+  "annotations": [
+    {
+      "id": "video43_00787_temporal_rng_0",
+      "type": "range",
+      "query": "When is the grasper being used to actively move the gallbladder?",
+      "ranges": [
+        [
+          0,
+          10
+        ]
+      ]
+    }
+  ]
+}

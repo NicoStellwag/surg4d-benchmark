@@ -1,0 +1,32 @@
+{
+  "annotations": [
+    {
+      "id": "video25_00402_directional_0",
+      "range": [
+        2,
+        8
+      ],
+      "query": "In which direction is the grasper in the back moving the top of the gallbladder?",
+      "direction": {
+        "x": -1,
+        "y": 1,
+        "z": 0
+      },
+      "direction_label": "Left, Down"
+    },
+    {
+      "id": "video25_00402_directional_1",
+      "range": [
+        2,
+        8
+      ],
+      "query": "In which direction is the liver moving?",
+      "direction": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "direction_label": "Down"
+    }
+  ]
+}

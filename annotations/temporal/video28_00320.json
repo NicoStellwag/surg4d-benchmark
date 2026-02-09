@@ -1,0 +1,15 @@
+{
+  "annotations": [
+    {
+      "id": "video28_00320_temporal_rng_0",
+      "type": "range",
+      "query": "When does the right grasper move the fat to expose the gallbladder?",
+      "ranges": [
+        [
+          12,
+          19
+        ]
+      ]
+    }
+  ]
+}
