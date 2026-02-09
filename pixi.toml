@@ -1,7 +1,7 @@
 [workspace]
 authors = ["NicoStellwag <nico.stellwag@gmail.com>"]
 channels = ["conda-forge"]
-name = "cholec4d"
+name = "endo4d"
 platforms = ["osx-arm64"]
 version = "0.1.0"
 

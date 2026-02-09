@@ -1,4 +1,4 @@
-# cholec4d
+# endo4d
 
 1. Download CholecSeg8k dataset
     ```bash
