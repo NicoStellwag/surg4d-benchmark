@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video55_00588_directional_0",
-      "range": [
-        10,
-        14
-      ],
-      "query": "In which direction is the dissection tool pulling gallbladder tissue?",
       "direction": {
         "x": 0,
         "y": -1,
         "z": -1
       },
-      "direction_label": "Up, To Camera"
+      "direction_label": "Up, To Camera",
+      "id": "video55_00588_directional_0",
+      "query": "In which direction is the dissection tool pulling gallbladder tissue?",
+      "range": [
+        10,
+        14
+      ]
     }
   ]
 }
