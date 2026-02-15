@@ -23,6 +23,11 @@
     # then forward the port and open localhost:8080
     ```
 
+4. Optional: Sanity check spatial annotations
+    ```bash
+    pixi run python dump_spatial.py
+    ```
+
 ### Annotation tool usage
 - move between frames with left and right arrow keys (or using time slider)
 - add ranges by holding shift while moving frames

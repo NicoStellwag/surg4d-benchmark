@@ -1,32 +1,32 @@
 {
   "annotations": [
     {
-      "id": "video17_01563_directional_0",
-      "range": [
-        10,
-        13
-      ],
-      "query": "In which direction is the gallbladder snapping?",
       "direction": {
         "x": -1,
         "y": 0,
         "z": -1
       },
-      "direction_label": "Left, To Camera"
+      "direction_label": "Left, To Camera",
+      "id": "video17_01563_directional_0",
+      "query": "In which direction is the gallbladder snapping?",
+      "range": [
+        10,
+        13
+      ]
     },
     {
-      "id": "video17_01563_directional_1",
-      "range": [
-        0,
-        5
-      ],
-      "query": "In which direction is the grasper pulling the gallbladder?",
       "direction": {
         "x": 0,
         "y": 0,
         "z": 1
       },
-      "direction_label": "From Camera"
+      "direction_label": "From Camera",
+      "id": "video17_01563_directional_1",
+      "query": "In which direction is the grasper pulling the gallbladder?",
+      "range": [
+        0,
+        5
+      ]
     }
   ]
 }

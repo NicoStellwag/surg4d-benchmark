@@ -4,25 +4,25 @@
       "id": "video12_19500_spatial_0",
       "timestep": 7,
       "pil_coords": [
-        366,
-        197
+        349,
+        182
       ],
       "numpy_coords": [
-        197,
-        366
+        182,
+        349
       ],
-      "query": "Where does the dissection tool touch the gallbladder?"
+      "query": "Where does the dissection tool dissect the gallbladder?"
     },
     {
       "id": "video12_19500_spatial_1",
-      "timestep": 9,
+      "timestep": 7,
       "pil_coords": [
-        410,
-        87
+        400,
+        40
       ],
       "numpy_coords": [
-        87,
-        410
+        40,
+        400
       ],
       "query": "Where is the grasper behind the dissection tool holding the gallbladder?"
     }

@@ -260,6 +260,22 @@ body {
     object-fit: contain;
 }
 
+/* Spatial labeling uses original frame pixels, so keep native image size */
+#spatialFrameContainer {
+    overflow: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#spatialFrame {
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+    object-fit: unset;
+    display: block;
+}
+
 .annotation-overlay {
     position: absolute;
     top: 0;

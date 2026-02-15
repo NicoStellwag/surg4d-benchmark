@@ -733,9 +733,27 @@ class AnnotationTool {
     deleteTemporalAnnotation(annotationId) {
         if (!confirm('Delete this temporal annotation?')) return;
         this.temporalAnnotations = this.temporalAnnotations.filter(a => a.id !== annotationId);
+        this.recomputeTemporalAnnotationIds();
         this.renderTimeline();
         this.renderTemporalAnnotationsList();
         this.updateTemporalFrameOverlay();
+    }
+
+    recomputeTemporalAnnotationIds() {
+        let pitIndex = 0;
+        let rangeIndex = 0;
+
+        this.temporalAnnotations = this.temporalAnnotations.map(annotation => {
+            if (annotation.type === 'pit') {
+                const updatedAnnotation = { ...annotation, id: `${this.currentClip.name}_temporal_pit_${pitIndex}` };
+                pitIndex += 1;
+                return updatedAnnotation;
+            }
+
+            const updatedAnnotation = { ...annotation, id: `${this.currentClip.name}_temporal_rng_${rangeIndex}` };
+            rangeIndex += 1;
+            return updatedAnnotation;
+        });
     }
 
     updateTemporalFrameOverlay() {
@@ -1271,9 +1289,17 @@ class AnnotationTool {
     deleteDirectionalAnnotation(annotationId) {
         if (!confirm('Delete this directional annotation?')) return;
         this.directionalAnnotations = this.directionalAnnotations.filter(a => a.id !== annotationId);
+        this.recomputeDirectionalAnnotationIds();
         this.renderDirectionalTimeline();
         this.renderDirectionalAnnotationsList();
         this.updateDirectionalArrowOverlay();
+    }
+
+    recomputeDirectionalAnnotationIds() {
+        this.directionalAnnotations = this.directionalAnnotations.map((annotation, index) => ({
+            ...annotation,
+            id: `${this.currentClip.name}_directional_${index}`
+        }));
     }
 
     updateDirectionalArrowOverlay() {
@@ -1668,45 +1694,24 @@ class AnnotationTool {
 
     setupSpatialAnnotations() {
         const frameContainer = document.getElementById('spatialFrameContainer');
+        const img = document.getElementById('spatialFrame');
 
         frameContainer.addEventListener('click', (e) => {
             if (!this.currentClip || this.frameData.length === 0) return;
             if (e.target.classList.contains('annotation-point')) return;
 
-            const rect = frameContainer.getBoundingClientRect();
-            const img = document.getElementById('spatialFrame');
-
-            // Use container dimensions, not image dimensions (image uses object-fit: contain)
-            const containerWidth = frameContainer.clientWidth;
-            const containerHeight = frameContainer.clientHeight;
-            const imgAspect = img.naturalWidth / img.naturalHeight;
-            const containerAspect = containerWidth / containerHeight;
-
-            let actualImgWidth, actualImgHeight, offsetX, offsetY;
-
-            if (imgAspect > containerAspect) {
-                // Image is wider than container - letterboxed top/bottom
-                actualImgWidth = containerWidth;
-                actualImgHeight = containerWidth / imgAspect;
-                offsetX = 0;
-                offsetY = (containerHeight - actualImgHeight) / 2;
-            } else {
-                // Image is taller than container - letterboxed left/right
-                actualImgHeight = containerHeight;
-                actualImgWidth = containerHeight * imgAspect;
-                offsetX = (containerWidth - actualImgWidth) / 2;
-                offsetY = 0;
-            }
-
-            const clickX = e.clientX - rect.left - offsetX;
-            const clickY = e.clientY - rect.top - offsetY;
-
-            if (clickX < 0 || clickX > actualImgWidth || clickY < 0 || clickY > actualImgHeight) {
+            if (!img || !img.naturalWidth || !img.naturalHeight) {
                 return;
             }
 
-            const normX = clickX / actualImgWidth;
-            const normY = clickY / actualImgHeight;
+            const imageRect = img.getBoundingClientRect();
+            const clickX = e.clientX - imageRect.left;
+            const clickY = e.clientY - imageRect.top;
+
+            if (clickX < 0 || clickX > imageRect.width || clickY < 0 || clickY > imageRect.height) return;
+
+            const normX = clickX / imageRect.width;
+            const normY = clickY / imageRect.height;
             const pilX = Math.round(normX * img.naturalWidth);
             const pilY = Math.round(normY * img.naturalHeight);
             const numpyRow = Math.round(normY * img.naturalHeight);
@@ -1863,27 +1868,11 @@ class AnnotationTool {
         const currentFrame = this.frameData[this.currentFrameIndex];
         if (!currentFrame) return;
 
-        // Use container dimensions, not image dimensions (image uses object-fit: contain)
-        const containerWidth = frameContainer.clientWidth;
-        const containerHeight = frameContainer.clientHeight;
-        const imgAspect = img.naturalWidth / img.naturalHeight;
-        const containerAspect = containerWidth / containerHeight;
-
-        let actualImgWidth, actualImgHeight, offsetX, offsetY;
-
-        if (imgAspect > containerAspect) {
-            // Image is wider than container - letterboxed top/bottom
-            actualImgWidth = containerWidth;
-            actualImgHeight = containerWidth / imgAspect;
-            offsetX = 0;
-            offsetY = (containerHeight - actualImgHeight) / 2;
-        } else {
-            // Image is taller than container - letterboxed left/right
-            actualImgHeight = containerHeight;
-            actualImgWidth = containerHeight * imgAspect;
-            offsetX = (containerWidth - actualImgWidth) / 2;
-            offsetY = 0;
-        }
+        const renderedWidth = img.clientWidth;
+        const renderedHeight = img.clientHeight;
+        const offsetX = img.offsetLeft;
+        const offsetY = img.offsetTop;
+        if (!renderedWidth || !renderedHeight) return;
 
         const frameAnnotations = this.spatialAnnotations.filter(a => a.timestep === currentFrame.consecutive);
 
@@ -1891,8 +1880,8 @@ class AnnotationTool {
             const normX = annotation.pil_coords[0] / img.naturalWidth;
             const normY = annotation.pil_coords[1] / img.naturalHeight;
 
-            const displayX = offsetX + normX * actualImgWidth;
-            const displayY = offsetY + normY * actualImgHeight;
+            const displayX = offsetX + normX * renderedWidth;
+            const displayY = offsetY + normY * renderedHeight;
 
             const point = document.createElement('div');
             point.className = 'annotation-point';
@@ -1934,9 +1923,17 @@ class AnnotationTool {
         document.getElementById('queryText').focus();
     }
 
+    recomputeSpatialAnnotationIds() {
+        this.spatialAnnotations = this.spatialAnnotations.map((annotation, index) => ({
+            ...annotation,
+            id: `${this.currentClip.name}_spatial_${index}`
+        }));
+    }
+
     deleteAnnotation(annotationId) {
         if (!confirm('Delete this annotation?')) return;
         this.spatialAnnotations = this.spatialAnnotations.filter(a => a.id !== annotationId);
+        this.recomputeSpatialAnnotationIds();
         this.renderAnnotationsList();
         this.renderAnnotationsOnFrame();
     }

@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video12_19500_directional_0",
-      "range": [
-        0,
-        19
-      ],
-      "query": "In which direction is the grasper left of scene (out of view) applying tension to the gallbladder?",
       "direction": {
         "x": -1,
         "y": -1,
         "z": 0
       },
-      "direction_label": "Left, Up"
+      "direction_label": "Left, Up",
+      "id": "video12_19500_directional_0",
+      "query": "In which direction is the grasper left of scene (out of view) applying tension to the gallbladder?",
+      "range": [
+        0,
+        19
+      ]
     }
   ]
 }

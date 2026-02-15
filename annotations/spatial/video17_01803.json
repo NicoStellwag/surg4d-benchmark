@@ -4,12 +4,12 @@
       "id": "video17_01803_spatial_0",
       "timestep": 13,
       "pil_coords": [
-        367,
-        211
+        347,
+        205
       ],
       "numpy_coords": [
-        211,
-        367
+        205,
+        347
       ],
       "query": "Where does the grasper hold the gallbladder?"
     }

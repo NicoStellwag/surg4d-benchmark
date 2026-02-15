@@ -2,14 +2,14 @@
   "annotations": [
     {
       "id": "video17_01803_temporal_rng_0",
-      "type": "range",
       "query": "When is the grasper holding the gallbladder?",
       "ranges": [
         [
           5,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

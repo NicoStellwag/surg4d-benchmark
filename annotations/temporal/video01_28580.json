@@ -1,9 +1,9 @@
 {
   "annotations": [
     {
-      "timesstep": 14,
       "id": "video01_28580_temporal_pit_0",
       "query": "When has the dissection tool snapped away from the gallbladder?",
+      "timesstep": 14,
       "type": "pit"
     },
     {

@@ -2,7 +2,6 @@
   "annotations": [
     {
       "id": "video12_19500_temporal_rng_0",
-      "type": "range",
       "query": "When is the dissection tool touching the gallbladder?",
       "ranges": [
         [
@@ -21,7 +20,8 @@
           17,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

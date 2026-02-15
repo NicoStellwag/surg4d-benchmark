@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video12_19660_directional_0",
-      "range": [
-        14,
-        18
-      ],
-      "query": "In which direction does the gallbladder move?",
       "direction": {
         "x": 1,
         "y": 1,
         "z": 0
       },
-      "direction_label": "Right, Down"
+      "direction_label": "Right, Down",
+      "id": "video12_19660_directional_0",
+      "query": "In which direction does the gallbladder move?",
+      "range": [
+        14,
+        18
+      ]
     }
   ]
 }

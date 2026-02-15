@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video01_28580_directional_0",
-      "range": [
-        5,
-        7
-      ],
-      "query": "In which direction does the dissection tool hook move?",
       "direction": {
         "x": -1,
         "y": 1,
         "z": -1
       },
-      "direction_label": "Left, Down, To Camera"
+      "direction_label": "Left, Down, To Camera",
+      "id": "video01_28580_directional_0",
+      "query": "In which direction does the dissection tool hook move?",
+      "range": [
+        5,
+        7
+      ]
     }
   ]
 }

@@ -2,20 +2,20 @@
   "annotations": [
     {
       "id": "video17_01563_temporal_rng_0",
-      "type": "range",
       "query": "When is the grasper holding the gallbladder?",
       "ranges": [
         [
           0,
           10
         ]
-      ]
+      ],
+      "type": "range"
     },
     {
       "id": "video17_01563_temporal_pit_0",
-      "type": "pit",
       "query": "When has the gallbladder snapped away from the grasper?",
-      "timesstep": 11
+      "timesstep": 11,
+      "type": "pit"
     }
   ]
 }

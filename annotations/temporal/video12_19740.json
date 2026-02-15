@@ -1,15 +1,15 @@
 {
   "annotations": [
     {
-      "timesstep": 5,
       "id": "video12_19740_temporal_pit_0",
       "query": "When does the lower, front grasper start holding the gallbladder?",
+      "timesstep": 5,
       "type": "pit"
     },
     {
-      "timesstep": 11,
       "id": "video12_19740_temporal_pit_1",
       "query": "When does the top grasper start moving down?",
+      "timesstep": 11,
       "type": "pit"
     },
     {
@@ -47,20 +47,20 @@
     },
     {
       "id": "video12_19740_temporal_rng_3",
-      "type": "range",
       "query": "When are both graspers roughly at the same depth?",
       "ranges": [
         [
           14,
           16
         ]
-      ]
+      ],
+      "type": "range"
     },
     {
       "id": "video12_19740_temporal_pit_2",
-      "type": "pit",
       "query": "When is the right grasper located closer to the camera for the first time?",
-      "timesstep": 17
+      "timesstep": 17,
+      "type": "pit"
     }
   ]
 }
