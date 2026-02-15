@@ -2,8 +2,7 @@
   "annotations": [
     {
       "id": "video55_00588_spatial_0",
-      "frame_consecutive": 0,
-      "frame_original": 588,
+      "timestep": 0,
       "pil_coords": [
         401,
         8
@@ -16,8 +15,7 @@
     },
     {
       "id": "video55_00588_spatial_1",
-      "frame_consecutive": 0,
-      "frame_original": 588,
+      "timestep": 0,
       "pil_coords": [
         418,
         345
@@ -30,8 +28,7 @@
     },
     {
       "id": "video55_00588_spatial_2",
-      "frame_consecutive": 6,
-      "frame_original": 612,
+      "timestep": 6,
       "pil_coords": [
         416,
         198
@@ -44,8 +41,7 @@
     },
     {
       "id": "video55_00588_spatial_3",
-      "frame_consecutive": 16,
-      "frame_original": 652,
+      "timestep": 16,
       "pil_coords": [
         418,
         163

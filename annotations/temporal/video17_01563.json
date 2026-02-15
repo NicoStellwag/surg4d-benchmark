@@ -15,7 +15,7 @@
       "id": "video17_01563_temporal_pit_0",
       "type": "pit",
       "query": "When has the gallbladder snapped away from the grasper?",
-      "frame": 11
+      "timesstep": 11
     }
   ]
 }

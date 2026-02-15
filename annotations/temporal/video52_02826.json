@@ -4,7 +4,7 @@
       "id": "video52_02826_temporal_pit_0",
       "type": "pit",
       "query": "When is the dissection tool closest to the gallbladder?",
-      "frame": 5
+      "timesstep": 5
     },
     {
       "id": "video52_02826_temporal_rng_0",

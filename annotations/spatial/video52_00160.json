@@ -2,8 +2,7 @@
   "annotations": [
     {
       "id": "video52_00160_spatial_0",
-      "frame_consecutive": 10,
-      "frame_original": 200,
+      "timestep": 10,
       "pil_coords": [
         490,
         266

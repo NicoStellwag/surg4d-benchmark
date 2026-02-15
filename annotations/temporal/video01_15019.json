@@ -1,7 +1,7 @@
 {
   "annotations": [
     {
-      "frame": 16,
+      "timesstep": 16,
       "id": "video01_15019_temporal_pit_0",
       "query": "When does the dissection tool start to apply electrical current?",
       "type": "pit"

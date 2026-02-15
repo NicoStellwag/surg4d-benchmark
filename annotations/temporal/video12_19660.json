@@ -4,7 +4,7 @@
       "id": "video12_19660_temporal_pit_0",
       "type": "pit",
       "query": "When does the grasper to the left of the scene (out of view) let go of the gallbladder?",
-      "frame": 14
+      "timesstep": 14
     },
     {
       "id": "video12_19660_temporal_rng_0",

@@ -1,8 +1,7 @@
 {
   "annotations": [
     {
-      "frame_consecutive": 5,
-      "frame_original": 15039,
+      "timestep": 5,
       "id": "video01_15019_spatial_0",
       "numpy_coords": [
         304,
@@ -15,8 +14,7 @@
       "query": "Where does the dissection tool touch the gallbladder?"
     },
     {
-      "frame_consecutive": 7,
-      "frame_original": 15047,
+      "timestep": 7,
       "id": "video01_15019_spatial_1",
       "numpy_coords": [
         150,

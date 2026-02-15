@@ -1,8 +1,7 @@
 {
   "annotations": [
     {
-      "frame_consecutive": 13,
-      "frame_original": 292,
+      "timestep": 13,
       "id": "video01_00240_spatial_0",
       "numpy_coords": [
         470,

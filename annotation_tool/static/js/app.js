@@ -507,7 +507,7 @@ class AnnotationTool {
         if (annotation.type === 'pit') {
             const bar = document.createElement('div');
             bar.className = 'timeline-annotation-bar type-pit';
-            bar.style.left = `${(annotation.frame / (this.frameData.length - 1)) * 100}%`;
+            bar.style.left = `${(annotation.timestep / (this.frameData.length - 1)) * 100}%`;
             bar.title = `Frame ${annotation.frame}`;
             barContainer.appendChild(bar);
         } else if (annotation.ranges) {
@@ -680,7 +680,7 @@ class AnnotationTool {
                 alert('Please enter a valid frame number');
                 return;
             }
-            this.editingTemporalAnnotation.frame = frame;
+            this.editingTemporalAnnotation.timestep = frame;
         } else {
             if (this.editingTemporalRanges.length === 0) {
                 alert('Please add at least one range');
@@ -745,7 +745,7 @@ class AnnotationTool {
 
         const active = this.temporalAnnotations.filter(a => {
             if (a.type === 'pit') {
-                return a.frame === this.currentFrameIndex;
+                return a.timestep === this.currentFrameIndex;
             } else {
                 return a.ranges.some(r => this.currentFrameIndex >= r[0] && this.currentFrameIndex <= r[1]);
             }
@@ -1739,8 +1739,7 @@ class AnnotationTool {
 
         this.pendingAnnotation = {
             id: annotationId,
-            frame_consecutive: frameInfo.consecutive,
-            frame_original: frameInfo.original,
+            timestep: frameInfo.consecutive,
             pil_coords: [coords.pilX, coords.pilY],
             numpy_coords: [coords.numpyRow, coords.numpyCol],
             query: ''
@@ -1808,7 +1807,7 @@ class AnnotationTool {
                 <div class="annotation-item-info">
                     <div class="annotation-item-id">${annotation.id}</div>
                     <div class="annotation-item-meta">
-                        Frame ${annotation.frame_consecutive} | PIL: [${annotation.pil_coords[0]}, ${annotation.pil_coords[1]}]
+                        Frame ${annotation.timestep} | PIL: [${annotation.pil_coords[0]}, ${annotation.pil_coords[1]}]
                     </div>
                 </div>
                 <div class="annotation-item-query" title="${annotation.query}">${annotation.query}</div>
@@ -1839,7 +1838,7 @@ class AnnotationTool {
             });
 
             item.addEventListener('click', () => {
-                this.currentFrameIndex = this.frameData.findIndex(f => f.consecutive === annotation.frame_consecutive);
+                this.currentFrameIndex = this.frameData.findIndex(f => f.consecutive === annotation.timestep);
                 if (this.currentFrameIndex !== -1) {
                     this.updateAllSliders();
                     this.updateAllDisplays();
@@ -1886,7 +1885,7 @@ class AnnotationTool {
             offsetY = 0;
         }
 
-        const frameAnnotations = this.spatialAnnotations.filter(a => a.frame_consecutive === currentFrame.consecutive);
+        const frameAnnotations = this.spatialAnnotations.filter(a => a.timestep === currentFrame.consecutive);
 
         frameAnnotations.forEach(annotation => {
             const normX = annotation.pil_coords[0] / img.naturalWidth;
@@ -1924,7 +1923,7 @@ class AnnotationTool {
         this.pendingAnnotation = { ...annotation };
 
         document.getElementById('annotationId').textContent = annotation.id;
-        document.getElementById('annotationFrame').textContent = `Frame ${annotation.frame_consecutive} (original: ${annotation.frame_original})`;
+        document.getElementById('annotationFrame').textContent = `Frame ${annotation.timestep}`;
         document.getElementById('annotationPilCoords').textContent = `[${annotation.pil_coords[0]}, ${annotation.pil_coords[1]}]`;
         document.getElementById('annotationNumpyCoords').textContent = `[${annotation.numpy_coords[0]}, ${annotation.numpy_coords[1]}]`;
         document.getElementById('queryText').value = annotation.query;

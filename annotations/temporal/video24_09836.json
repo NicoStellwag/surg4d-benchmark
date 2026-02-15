@@ -15,13 +15,13 @@
       "id": "video24_09836_temporal_pit_0",
       "type": "pit",
       "query": "At which point in time are both graspers closest to each other?",
-      "frame": 0
+      "timesstep": 0
     },
     {
       "id": "video24_09836_temporal_pit_1",
       "type": "pit",
       "query": "When do both graspers' tips have the same depth with respect to the camera?",
-      "frame": 0
+      "timesstep": 0
     },
     {
       "id": "video24_09836_temporal_rng_1",

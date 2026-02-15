@@ -2,8 +2,7 @@
   "annotations": [
     {
       "id": "video24_09836_spatial_0",
-      "frame_consecutive": 10,
-      "frame_original": 9876,
+      "timestep": 10,
       "pil_coords": [
         440,
         89
@@ -16,8 +15,7 @@
     },
     {
       "id": "video24_09836_spatial_1",
-      "frame_consecutive": 10,
-      "frame_original": 9876,
+      "timestep": 10,
       "pil_coords": [
         430,
         369
@@ -30,8 +28,7 @@
     },
     {
       "id": "video24_09836_spatial_2",
-      "frame_consecutive": 15,
-      "frame_original": 9896,
+      "timestep": 15,
       "pil_coords": [
         505,
         43
@@ -44,8 +41,7 @@
     },
     {
       "id": "video24_09836_spatial_3",
-      "frame_consecutive": 1,
-      "frame_original": 9840,
+      "timestep": 1,
       "pil_coords": [
         373,
         155
@@ -58,8 +54,7 @@
     },
     {
       "id": "video24_09836_spatial_4",
-      "frame_consecutive": 0,
-      "frame_original": 9836,
+      "timestep": 0,
       "pil_coords": [
         463,
         150

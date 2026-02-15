@@ -1,8 +1,7 @@
 {
   "annotations": [
     {
-      "frame_consecutive": 17,
-      "frame_original": 19808,
+      "timestep": 17,
       "id": "video12_19740_spatial_0",
       "numpy_coords": [
         175,
@@ -15,8 +14,7 @@
       "query": "Where is the grasper currently letting go of the gallbladder?"
     },
     {
-      "frame_consecutive": 5,
-      "frame_original": 19760,
+      "timestep": 5,
       "id": "video12_19740_spatial_1",
       "numpy_coords": [
         66,

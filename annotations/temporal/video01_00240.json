@@ -1,7 +1,7 @@
 {
   "annotations": [
     {
-      "frame": 11,
+      "timesstep": 11,
       "id": "video01_00240_temporal_pit_0",
       "query": "When does the grasper begin to hold the gallbladder?",
       "type": "pit"
