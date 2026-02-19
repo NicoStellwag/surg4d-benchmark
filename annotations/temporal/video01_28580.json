@@ -2,13 +2,13 @@
   "annotations": [
     {
       "id": "video01_28580_temporal_pit_0",
-      "query": "When has the dissection tool snapped away from the gallbladder?",
-      "timesstep": 14,
+      "query": "When has the l-hook snapped away from the gallbladder?",
+      "timestep": 14,
       "type": "pit"
     },
     {
       "id": "video01_28580_temporal_rng_0",
-      "query": "When is the dissection tool actively coagulating the gallbladder?",
+      "query": "When is the l-hook actively coagulating the gallbladder?",
       "ranges": [
         [
           12,
@@ -19,7 +19,7 @@
     },
     {
       "id": "video01_28580_temporal_rng_1",
-      "query": "When is the dissection tool touching the gallbladder?",
+      "query": "When is the l-hook touching the gallbladder?",
       "ranges": [
         [
           0,

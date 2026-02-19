@@ -2,14 +2,14 @@
   "annotations": [
     {
       "id": "video52_00160_temporal_rng_0",
-      "type": "range",
-      "query": "When is the grasper actively pulling the gallbladder upwards?",
+      "query": "When is the grasper actively pulling the gallbladder significantly upwards?",
       "ranges": [
         [
           7,
           14
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

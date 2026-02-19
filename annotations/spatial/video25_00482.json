@@ -2,29 +2,29 @@
   "annotations": [
     {
       "id": "video25_00482_spatial_0",
-      "timestep": 8,
-      "pil_coords": [
-        456,
-        233
-      ],
       "numpy_coords": [
         233,
         456
       ],
-      "query": "Where does the back grasper touch the gallbladder?"
+      "pil_coords": [
+        456,
+        233
+      ],
+      "query": "Where does the back grasper touch the gallbladder?",
+      "timestep": 8
     },
     {
       "id": "video25_00482_spatial_1",
-      "timestep": 8,
-      "pil_coords": [
-        536,
-        294
-      ],
       "numpy_coords": [
         294,
         536
       ],
-      "query": "Where does the front grasper touch the gallbladder?"
+      "pil_coords": [
+        536,
+        294
+      ],
+      "query": "Where does the front grasper grip the gallbladder?",
+      "timestep": 8
     }
   ]
 }

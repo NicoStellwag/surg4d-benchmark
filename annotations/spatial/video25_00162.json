@@ -2,16 +2,16 @@
   "annotations": [
     {
       "id": "video25_00162_spatial_0",
-      "timestep": 16,
-      "pil_coords": [
-        413,
-        316
-      ],
       "numpy_coords": [
         316,
         413
       ],
-      "query": "Where does the grasper grasp the gallbladder fundus?"
+      "pil_coords": [
+        413,
+        316
+      ],
+      "query": "Where does the bottom grasper grip the gallbladder fundus?",
+      "timestep": 16
     }
   ]
 }

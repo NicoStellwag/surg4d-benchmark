@@ -10,7 +10,7 @@
         440,
         89
       ],
-      "query": "Where does the right grasper touch the gallbladder?",
+      "query": "Where does the right grasper grip the gallbladder?",
       "timestep": 10
     },
     {
@@ -36,34 +36,34 @@
         463,
         150
       ],
-      "query": "Where is the right grasper holding the gallbladder?",
+      "query": "Where is the right grasper gripping the gallbladder?",
       "timestep": 0
     },
     {
       "id": "video24_09836_spatial_3",
-      "timestep": 10,
-      "pil_coords": [
-        440,
-        381
-      ],
       "numpy_coords": [
         381,
         440
       ],
-      "query": "Where does the left grasper touch the stomach?"
+      "pil_coords": [
+        440,
+        381
+      ],
+      "query": "Where does the left grasper touch the stomach?",
+      "timestep": 10
     },
     {
       "id": "video24_09836_spatial_4",
-      "timestep": 15,
-      "pil_coords": [
-        518,
-        33
-      ],
       "numpy_coords": [
         33,
         518
       ],
-      "query": "Where does the back grasper apply pressure to the liver?"
+      "pil_coords": [
+        518,
+        33
+      ],
+      "query": "Where does the back grasper apply pressure to the liver?",
+      "timestep": 15
     }
   ]
 }

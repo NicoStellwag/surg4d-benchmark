@@ -8,7 +8,7 @@
       },
       "direction_label": "Right, To Camera",
       "id": "video01_15019_directional_0",
-      "query": "In which direction is the dissection tool pulling?",
+      "query": "In which direction is the l-hook pulling?",
       "range": [
         11,
         16

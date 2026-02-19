@@ -2,29 +2,29 @@
   "annotations": [
     {
       "id": "video01_15019_spatial_0",
-      "timestep": 3,
-      "pil_coords": [
-        466,
-        123
-      ],
       "numpy_coords": [
         123,
         466
       ],
-      "query": "Where is the grasper holding the gallbladder?"
+      "pil_coords": [
+        466,
+        123
+      ],
+      "query": "Where is the right grasper gripping the gallbladder?",
+      "timestep": 3
     },
     {
       "id": "video01_15019_spatial_1",
-      "timestep": 6,
-      "pil_coords": [
-        525,
-        328
-      ],
       "numpy_coords": [
         328,
         525
       ],
-      "query": "Where does the dissection tool touch the gallbladder?"
+      "pil_coords": [
+        525,
+        328
+      ],
+      "query": "Where does the l-hook touch the gallbladder?",
+      "timestep": 6
     }
   ]
 }

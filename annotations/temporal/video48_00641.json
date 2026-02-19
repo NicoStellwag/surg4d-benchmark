@@ -2,14 +2,14 @@
   "annotations": [
     {
       "id": "video48_00641_temporal_rng_0",
-      "type": "range",
-      "query": "When is the grasper actively moving the gallbladder?",
+      "query": "When is the grasper actively and significantly moving the gallbladder?",
       "ranges": [
         [
           0,
           9
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

@@ -6,7 +6,7 @@
         3,
         11
       ],
-      "query": "In which direction relative to the grasper does the dissection tool start interacting with the gallbladder?",
+      "query": "Where, relative to the grasper, does the l-hook start interacting with the gallbladder?",
       "direction": {
         "x": 1,
         "y": 1,

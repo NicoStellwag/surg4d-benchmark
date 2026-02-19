@@ -1,46 +1,46 @@
 {
   "annotations": [
     {
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "direction_label": "Up",
       "id": "video52_00160_directional_0",
-      "range": [
-        7,
-        13
-      ],
       "query": "In which direction is the grasper moving?",
+      "range": [
+        7,
+        13
+      ]
+    },
+    {
       "direction": {
         "x": 0,
         "y": -1,
         "z": 0
       },
-      "direction_label": "Up"
-    },
-    {
+      "direction_label": "Up",
       "id": "video52_00160_directional_1",
+      "query": "In which direction is the gallbladder moving?",
       "range": [
         7,
         13
-      ],
-      "query": "In which direction is the gallbladder moving?",
-      "direction": {
-        "x": 0,
-        "y": -1,
-        "z": 0
-      },
-      "direction_label": "Up"
+      ]
     },
     {
-      "id": "video52_00160_directional_2",
-      "range": [
-        7,
-        13
-      ],
-      "query": "In which direction is the liver moving?",
       "direction": {
         "x": 0,
         "y": -1,
         "z": 0
       },
-      "direction_label": "Up"
+      "direction_label": "Up",
+      "id": "video52_00160_directional_2",
+      "query": "In which direction is the liver moving?",
+      "range": [
+        7,
+        13
+      ]
     }
   ]
 }

@@ -1,32 +1,32 @@
 {
   "annotations": [
     {
-      "id": "video35_00940_directional_0",
-      "range": [
-        5,
-        9
-      ],
-      "query": "In which direction does the grasper move the gallbladder?",
       "direction": {
         "x": -1,
         "y": 1,
         "z": 0
       },
-      "direction_label": "Left, Down"
+      "direction_label": "Left, Down",
+      "id": "video35_00940_directional_0",
+      "query": "In which direction does the grasper move the gallbladder?",
+      "range": [
+        5,
+        9
+      ]
     },
     {
-      "id": "video35_00940_directional_1",
-      "range": [
-        12,
-        15
-      ],
-      "query": "In which direction does the grasper move the gallbladder?",
       "direction": {
         "x": 1,
         "y": -1,
         "z": 0
       },
-      "direction_label": "Right, Up"
+      "direction_label": "Right, Up",
+      "id": "video35_00940_directional_1",
+      "query": "In which direction does the grasper move the gallbladder?",
+      "range": [
+        12,
+        15
+      ]
     }
   ]
 }

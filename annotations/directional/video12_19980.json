@@ -1,46 +1,46 @@
 {
   "annotations": [
     {
-      "id": "video12_19980_directional_0",
-      "range": [
-        7,
-        11
-      ],
-      "query": "In which direction is the dissection tool extending?",
       "direction": {
         "x": -1,
         "y": 1,
         "z": 1
       },
-      "direction_label": "Left, Down, From Camera"
+      "direction_label": "Left, Down, From Camera",
+      "id": "video12_19980_directional_0",
+      "query": "In which direction is the l-hook extending?",
+      "range": [
+        7,
+        11
+      ]
     },
     {
-      "id": "video12_19980_directional_1",
-      "range": [
-        10,
-        19
-      ],
-      "query": "In which direction is the right grasper applying force to the liver?",
       "direction": {
         "x": 0,
         "y": 0,
         "z": 1
       },
-      "direction_label": "From Camera"
+      "direction_label": "From Camera",
+      "id": "video12_19980_directional_1",
+      "query": "In which direction is the right grasper applying force to the liver?",
+      "range": [
+        10,
+        19
+      ]
     },
     {
-      "id": "video12_19980_directional_2",
-      "range": [
-        5,
-        19
-      ],
-      "query": "In which direction is the left grasper applying tension to the gallbladder?",
       "direction": {
         "x": -1,
         "y": 0,
         "z": -1
       },
-      "direction_label": "Left, To Camera"
+      "direction_label": "Left, To Camera",
+      "id": "video12_19980_directional_2",
+      "query": "In which direction is the left grasper applying tension to the gallbladder?",
+      "range": [
+        5,
+        19
+      ]
     }
   ]
 }

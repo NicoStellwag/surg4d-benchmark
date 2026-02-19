@@ -2,14 +2,14 @@
   "annotations": [
     {
       "id": "video18_00979_temporal_rng_0",
-      "type": "range",
-      "query": "When do grasper tip and dissection tool tip have equal depth with respect to the camera?",
+      "query": "When do grasper tip and l-hook tip have equal depth with respect to the camera?",
       "ranges": [
         [
           4,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

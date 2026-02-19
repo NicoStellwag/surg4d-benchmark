@@ -2,20 +2,20 @@
   "annotations": [
     {
       "id": "video52_02826_temporal_pit_0",
-      "type": "pit",
-      "query": "When is the dissection tool closest to the gallbladder?",
-      "timesstep": 5
+      "query": "When is the l-hook closest to the gallbladder?",
+      "timestep": 5,
+      "type": "pit"
     },
     {
       "id": "video52_02826_temporal_rng_0",
-      "type": "range",
-      "query": "When is the top grasper holding the gallbladder?",
+      "query": "When is the top grasper gripping the gallbladder?",
       "ranges": [
         [
           0,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

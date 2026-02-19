@@ -2,16 +2,16 @@
   "annotations": [
     {
       "id": "video24_09916_spatial_0",
-      "timestep": 13,
-      "pil_coords": [
-        456,
-        189
-      ],
       "numpy_coords": [
         189,
         456
       ],
-      "query": "Where does the grasper hold the gallbladder collum?"
+      "pil_coords": [
+        456,
+        189
+      ],
+      "query": "Where does the front grasper grip the gallbladder collum?",
+      "timestep": 13
     }
   ]
 }

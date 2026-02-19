@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video28_00320_directional_0",
-      "range": [
-        12,
-        19
-      ],
-      "query": "In which direction is the right grasper pushing the fat to expose the gallbladder?",
       "direction": {
         "x": -1,
         "y": 1,
         "z": -1
       },
-      "direction_label": "Left, Down, To Camera"
+      "direction_label": "Left, Down, To Camera",
+      "id": "video28_00320_directional_0",
+      "query": "In which direction is the right grasper pushing the fat to expose the gallbladder?",
+      "range": [
+        12,
+        19
+      ]
     }
   ]
 }

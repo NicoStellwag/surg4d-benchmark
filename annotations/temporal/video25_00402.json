@@ -2,29 +2,28 @@
   "annotations": [
     {
       "id": "video25_00402_temporal_rng_0",
-      "type": "range",
       "query": "When are both instruments touching the gallbladder?",
       "ranges": [
         [
           0,
           10
         ]
-      ]
+      ],
+      "type": "range"
     },
     {
       "id": "video25_00402_temporal_rng_1",
-      "type": "range",
-      "query": "When is the front grasper holding the gallbladder?",
+      "query": "When is the front grasper gripping the gallbladder?",
       "ranges": [
         [
           0,
           19
         ]
-      ]
+      ],
+      "type": "range"
     },
     {
       "id": "video25_00402_temporal_rng_2",
-      "type": "range",
       "query": "When does the back grasper touch the gallbladder?",
       "ranges": [
         [
@@ -35,7 +34,8 @@
           17,
           18
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

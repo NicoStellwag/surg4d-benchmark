@@ -2,29 +2,29 @@
   "annotations": [
     {
       "id": "video12_19500_spatial_0",
-      "timestep": 7,
-      "pil_coords": [
-        349,
-        182
-      ],
       "numpy_coords": [
         182,
         349
       ],
-      "query": "Where does the dissection tool dissect the gallbladder?"
+      "pil_coords": [
+        349,
+        182
+      ],
+      "query": "Where does the l-hook dissect the gallbladder?",
+      "timestep": 7
     },
     {
       "id": "video12_19500_spatial_1",
-      "timestep": 7,
-      "pil_coords": [
-        400,
-        40
-      ],
       "numpy_coords": [
         40,
         400
       ],
-      "query": "Where is the grasper behind the dissection tool holding the gallbladder?"
+      "pil_coords": [
+        400,
+        40
+      ],
+      "query": "Where is the grasper behind the l-hook holding the gallbladder?",
+      "timestep": 7
     }
   ]
 }

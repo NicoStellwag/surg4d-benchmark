@@ -3,12 +3,12 @@
     {
       "id": "video12_19660_temporal_pit_0",
       "query": "When does the grasper to the left of the scene (out of view) let go of the gallbladder?",
-      "timesstep": 14,
+      "timestep": 14,
       "type": "pit"
     },
     {
       "id": "video12_19660_temporal_rng_0",
-      "query": "When is the gallbladder dropping?",
+      "query": "When is the gallbladder significantly descending?",
       "ranges": [
         [
           14,
@@ -19,7 +19,7 @@
     },
     {
       "id": "video12_19660_temporal_rng_1",
-      "query": "When is the dissection tool touching the gallbladder?",
+      "query": "When is the l-hook touching the gallbladder?",
       "ranges": [
         [
           3,

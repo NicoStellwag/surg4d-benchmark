@@ -2,26 +2,26 @@
   "annotations": [
     {
       "id": "video24_09676_temporal_pit_0",
-      "type": "pit",
       "query": "When does the front grasper first start touching the gallbladder?",
-      "timesstep": 3
+      "timestep": 3,
+      "type": "pit"
     },
     {
       "id": "video24_09676_temporal_pit_1",
-      "type": "pit",
       "query": "When does the front grasper stop touching the gallbladder?",
-      "timesstep": 19
+      "timestep": 19,
+      "type": "pit"
     },
     {
       "id": "video24_09676_temporal_rng_0",
-      "type": "range",
-      "query": "When is the grasper in the back holding the gallbladder?",
+      "query": "When is the grasper in the back gripping the gallbladder?",
       "ranges": [
         [
           0,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

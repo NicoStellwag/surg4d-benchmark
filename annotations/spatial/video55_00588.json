@@ -10,7 +10,7 @@
         418,
         345
       ],
-      "query": "Where is the bottom grasper holding tissue?",
+      "query": "Where is the bottom grasper gripping tissue?",
       "timestep": 0
     },
     {
@@ -23,7 +23,7 @@
         416,
         198
       ],
-      "query": "Where is the dissection tool being inserted into the gallbladder?",
+      "query": "Where is the l-hook being inserted into the gallbladder?",
       "timestep": 6
     },
     {
@@ -36,21 +36,21 @@
         418,
         163
       ],
-      "query": "Where is the dissection tool hooked into the gallbladder?",
+      "query": "Where is the l-hook hooked into the gallbladder?",
       "timestep": 16
     },
     {
       "id": "video55_00588_spatial_3",
-      "timestep": 0,
-      "pil_coords": [
-        389,
-        18
-      ],
       "numpy_coords": [
         18,
         389
       ],
-      "query": "Where is the top grasper holding the gallbladder?"
+      "pil_coords": [
+        389,
+        18
+      ],
+      "query": "Where is the top grasper gripping the gallbladder?",
+      "timestep": 0
     }
   ]
 }

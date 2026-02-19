@@ -2,20 +2,20 @@
   "annotations": [
     {
       "id": "video20_03260_temporal_pit_0",
-      "type": "pit",
-      "query": "When does the dissection tool first touch the gallbladder?",
-      "timesstep": 5
+      "query": "When does the l-hook first touch the gallbladder?",
+      "timestep": 5,
+      "type": "pit"
     },
     {
       "id": "video20_03260_temporal_rng_0",
-      "type": "range",
-      "query": "When is the grasper holding the gallbladder?",
+      "query": "When is the grasper gripping the gallbladder?",
       "ranges": [
         [
           0,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

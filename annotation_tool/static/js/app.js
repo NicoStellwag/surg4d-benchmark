@@ -508,7 +508,7 @@ class AnnotationTool {
             const bar = document.createElement('div');
             bar.className = 'timeline-annotation-bar type-pit';
             bar.style.left = `${(annotation.timestep / (this.frameData.length - 1)) * 100}%`;
-            bar.title = `Frame ${annotation.frame}`;
+            bar.title = `Frame ${annotation.timestep}`;
             barContainer.appendChild(bar);
         } else if (annotation.ranges) {
             annotation.ranges.forEach(range => {
@@ -557,7 +557,7 @@ class AnnotationTool {
 
             let metaText = '';
             if (annotation.type === 'pit') {
-                metaText = `Frame ${annotation.frame}`;
+                metaText = `Frame ${annotation.timestep}`;
             } else {
                 metaText = annotation.ranges.map(r => `[${r[0]},${r[1]}]`).join(', ');
             }
@@ -596,7 +596,7 @@ class AnnotationTool {
 
             item.addEventListener('click', () => {
                 if (annotation.type === 'pit') {
-                    this.currentFrameIndex = annotation.frame;
+                    this.currentFrameIndex = annotation.timestep;
                 } else if (annotation.ranges && annotation.ranges.length > 0) {
                     this.currentFrameIndex = annotation.ranges[0][0];
                 }
@@ -626,7 +626,7 @@ class AnnotationTool {
         if (annotation.type === 'pit') {
             pitSection.style.display = 'block';
             rangeSection.style.display = 'none';
-            document.getElementById('temporalEditFrame').value = annotation.frame;
+            document.getElementById('temporalEditFrame').value = annotation.timestep;
             document.getElementById('temporalEditFrame').max = this.frameData.length - 1;
         } else {
             pitSection.style.display = 'none';

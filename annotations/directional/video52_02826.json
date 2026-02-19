@@ -6,7 +6,7 @@
         5,
         6
       ],
-      "query": "In which direction is the left grasper pulling the gallbladder?",
+      "query": "In which direction is the left grasper pulling on the gallbladder?",
       "direction": {
         "x": -1,
         "y": -1,

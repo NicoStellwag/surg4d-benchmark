@@ -1,32 +1,32 @@
 {
   "annotations": [
     {
-      "id": "video20_03260_directional_0",
-      "range": [
-        13,
-        19
-      ],
-      "query": "In which direction is the dissection tool pulling the gallbladder?",
       "direction": {
         "x": -1,
         "y": 0,
         "z": 0
       },
-      "direction_label": "Left"
+      "direction_label": "Left",
+      "id": "video20_03260_directional_0",
+      "query": "In which direction is the l-hook pulling the gallbladder?",
+      "range": [
+        13,
+        19
+      ]
     },
     {
-      "id": "video20_03260_directional_1",
-      "range": [
-        5,
-        9
-      ],
-      "query": "In which direction is the dissection tool pushing the gallbladder?",
       "direction": {
         "x": 1,
         "y": 0,
         "z": 0
       },
-      "direction_label": "Right"
+      "direction_label": "Right",
+      "id": "video20_03260_directional_1",
+      "query": "In which direction is the l-hook pushing the gallbladder?",
+      "range": [
+        5,
+        9
+      ]
     }
   ]
 }

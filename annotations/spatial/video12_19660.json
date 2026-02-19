@@ -10,7 +10,7 @@
         383,
         140
       ],
-      "query": "Where is the dissection tool coagulating the gallbladder?",
+      "query": "Where is the l-hook coagulating the gallbladder?",
       "timestep": 9
     },
     {
@@ -28,16 +28,16 @@
     },
     {
       "id": "video12_19660_spatial_2",
-      "timestep": 8,
-      "pil_coords": [
-        458,
-        22
-      ],
       "numpy_coords": [
         22,
         458
       ],
-      "query": "Where is the top grasper holding the gallbladder?"
+      "pil_coords": [
+        458,
+        22
+      ],
+      "query": "Where is the top grasper holding the gallbladder?",
+      "timestep": 8
     }
   ]
 }

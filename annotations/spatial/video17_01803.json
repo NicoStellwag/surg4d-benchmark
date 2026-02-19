@@ -2,16 +2,16 @@
   "annotations": [
     {
       "id": "video17_01803_spatial_0",
-      "timestep": 13,
-      "pil_coords": [
-        347,
-        205
-      ],
       "numpy_coords": [
         205,
         347
       ],
-      "query": "Where does the grasper hold the gallbladder?"
+      "pil_coords": [
+        347,
+        205
+      ],
+      "query": "Where does the grasper grip the gallbladder?",
+      "timestep": 13
     }
   ]
 }

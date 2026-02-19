@@ -2,14 +2,14 @@
   "annotations": [
     {
       "id": "video24_09916_temporal_rng_0",
-      "type": "range",
-      "query": "When is the grasper touching the gallbladder collum?",
+      "query": "When is the front grasper touching the gallbladder collum?",
       "ranges": [
         [
           8,
           19
         ]
-      ]
+      ],
+      "type": "range"
     }
   ]
 }

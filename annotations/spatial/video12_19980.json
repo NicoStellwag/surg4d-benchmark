@@ -2,16 +2,16 @@
   "annotations": [
     {
       "id": "video12_19980_spatial_0",
-      "timestep": 18,
-      "pil_coords": [
-        435,
-        221
-      ],
       "numpy_coords": [
         221,
         435
       ],
-      "query": "Where is the dissection tool coagulating the gallbladder?"
+      "pil_coords": [
+        435,
+        221
+      ],
+      "query": "Where is the l-hook coagulating the gallbladder?",
+      "timestep": 18
     }
   ]
 }
