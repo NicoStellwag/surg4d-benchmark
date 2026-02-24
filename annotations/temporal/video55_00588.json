@@ -2,7 +2,7 @@
   "annotations": [
     {
       "id": "video55_00588_temporal_rng_0",
-      "query": "When are front and back grasper stretching the gallbladder?",
+      "query": "When are front and back grasper stretching the connective tissue of the gallbladder?",
       "ranges": [
         [
           0,
@@ -13,7 +13,7 @@
     },
     {
       "id": "video55_00588_temporal_rng_1",
-      "query": "When is the l-hook touching the gallbladder?",
+      "query": "When is the l-hook touching the connective tissue of the gallbladder?",
       "ranges": [
         [
           0,

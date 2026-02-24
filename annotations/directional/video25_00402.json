@@ -15,18 +15,18 @@
       ]
     },
     {
-      "direction": {
-        "x": 0,
-        "y": 1,
-        "z": 0
-      },
-      "direction_label": "Down",
       "id": "video25_00402_directional_1",
-      "query": "In which direction is the liver moving?",
       "range": [
         2,
         8
-      ]
+      ],
+      "query": "In which direction is the liver moving?",
+      "direction": {
+        "x": -1,
+        "y": 1,
+        "z": 0
+      },
+      "direction_label": "Left, Down"
     }
   ]
 }

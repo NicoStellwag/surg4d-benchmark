@@ -1,15 +1,3 @@
 {
-  "annotations": [
-    {
-      "id": "video18_00979_temporal_rng_0",
-      "query": "When do grasper tip and l-hook tip have equal depth with respect to the camera?",
-      "ranges": [
-        [
-          4,
-          19
-        ]
-      ],
-      "type": "range"
-    }
-  ]
+  "annotations": []
 }

@@ -1,32 +1,32 @@
 {
   "annotations": [
     {
-      "direction": {
-        "x": 0,
-        "y": 0,
-        "z": -1
-      },
-      "direction_label": "To Camera",
       "id": "video27_00640_directional_0",
-      "query": "In which direction does the right grasper move?",
       "range": [
         16,
         19
-      ]
+      ],
+      "query": "In which direction does the right grasper move?",
+      "direction": {
+        "x": 0,
+        "y": -1,
+        "z": -1
+      },
+      "direction_label": "Up, To Camera"
     },
     {
-      "direction": {
-        "x": -1,
-        "y": -1,
-        "z": 0
-      },
-      "direction_label": "Left, Up",
       "id": "video27_00640_directional_1",
-      "query": "In which direction does the left grasper move?",
       "range": [
         1,
         7
-      ]
+      ],
+      "query": "In which direction does the left grasper move?",
+      "direction": {
+        "x": -1,
+        "y": -1,
+        "z": 1
+      },
+      "direction_label": "Left, Up, From Camera"
     }
   ]
 }

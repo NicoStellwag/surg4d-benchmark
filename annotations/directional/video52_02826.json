@@ -10,9 +10,9 @@
       "direction": {
         "x": -1,
         "y": -1,
-        "z": 0
+        "z": -1
       },
-      "direction_label": "Left, Up"
+      "direction_label": "Left, Up, To Camera"
     }
   ]
 }

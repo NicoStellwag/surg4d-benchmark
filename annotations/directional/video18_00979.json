@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
-      "id": "video18_00979_directional_0",
-      "range": [
-        3,
-        11
-      ],
-      "query": "Where, relative to the grasper, does the l-hook start interacting with the gallbladder?",
       "direction": {
         "x": 1,
         "y": 1,
         "z": 0
       },
-      "direction_label": "Right, Down"
+      "direction_label": "Right, Down",
+      "id": "video18_00979_directional_0",
+      "query": "Where, relative to the grasper, does the l-hook start interacting with the gallbladder?",
+      "range": [
+        3,
+        11
+      ]
     }
   ]
 }

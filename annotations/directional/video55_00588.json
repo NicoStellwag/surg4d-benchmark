@@ -1,18 +1,18 @@
 {
   "annotations": [
     {
+      "id": "video55_00588_directional_0",
+      "range": [
+        10,
+        14
+      ],
+      "query": "In which direction is the l-hook pulling the connective tissue of the gallbladder?",
       "direction": {
         "x": 0,
         "y": -1,
         "z": -1
       },
-      "direction_label": "Up, To Camera",
-      "id": "video55_00588_directional_0",
-      "query": "In which direction is the l-hook pulling gallbladder tissue?",
-      "range": [
-        10,
-        14
-      ]
+      "direction_label": "Up, To Camera"
     }
   ]
 }

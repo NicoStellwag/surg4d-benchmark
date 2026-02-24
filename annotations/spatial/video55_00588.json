@@ -10,7 +10,7 @@
         418,
         345
       ],
-      "query": "Where is the bottom grasper gripping tissue?",
+      "query": "Where is the bottom grasper gripping connective tissue of the gallbladder?",
       "timestep": 0
     },
     {
@@ -23,7 +23,7 @@
         416,
         198
       ],
-      "query": "Where is the l-hook being inserted into the gallbladder?",
+      "query": "Where is the l-hook being inserted into the connective tissue of the gallbladder?",
       "timestep": 6
     },
     {
@@ -36,7 +36,7 @@
         418,
         163
       ],
-      "query": "Where is the l-hook hooked into the gallbladder?",
+      "query": "Where is the l-hook hooked into the connective tissue of the gallbladder?",
       "timestep": 16
     },
     {
