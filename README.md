@@ -1,5 +1,10 @@
-# endo4d
+# Surg4D Annotations and Annotation Tool
 
+This repository contains the official annotations and annotation tool for our
+project Surg4D. You only need this if you want to annotate your own queries.
+For everything else, check our [main project repository](https://github.com/tum-ai/surg4d).
+
+### Setup
 1. Download CholecSeg8k dataset
     ```bash
     # download
@@ -29,5 +34,5 @@
     ```
 
 ### Annotation tool usage
-- move between frames with left and right arrow keys (or using time slider)
-- add ranges by holding shift while moving frames
+- Move between frames with left and right arrow keys (or using time slider)
+- Add ranges by holding shift while moving frames
